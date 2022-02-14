@@ -42,4 +42,54 @@ describe('Feedback widget behavior', function () {
         expect($('#feedback-danger').hasClass('d-none')).toBeTruthy()
         expect($('#feedback-danger').hasClass('alert-danger')).toBeTruthy()
     });
+
+    it('logs the feedback', function () {
+        localStorage.removeItem('feedback_widget')
+
+        new FeedbackWidget('feedback-danger').show('test');
+        var messages = Array.of(JSON.parse(localStorage.getItem('feedback_widget')));
+        expect(messages.indexOf({
+            message: 'test',
+            type: FeedbackTypes.info,
+        })).toBeTruthy();
+        expect(Object.keys(messages[0]).length).toBe(1);
+
+        new FeedbackWidget('feedback-error').show('error!', FeedbackTypes.danger);
+        messages = Array.of(JSON.parse(localStorage.getItem('feedback_widget')));
+
+        expect(messages.indexOf({
+            message: 'error!',
+            type: FeedbackTypes.danger,
+        })).toBeTruthy();
+        expect(Object.keys(messages[0]).length).toBe(2);
+    })
+
+    it('removes the logged feedback after more than 10 logs', function () {
+        localStorage.removeItem('feedback_widget')
+
+        new FeedbackWidget('feedback-1').show('error!');
+        new FeedbackWidget('feedback-2').show('error!');
+        new FeedbackWidget('feedback-3').show('error!');
+        new FeedbackWidget('feedback-4').show('error!');
+        new FeedbackWidget('feedback-5').show('error!');
+        new FeedbackWidget('feedback-6').show('error!');
+        new FeedbackWidget('feedback-7').show('error!');
+        new FeedbackWidget('feedback-8').show('error!');
+        new FeedbackWidget('feedback-9').show('error!');
+
+        let messages = Array.of(JSON.parse(localStorage.getItem('feedback_widget')));
+        expect(Object.keys(messages[0]).length).toBe(9);
+
+        new FeedbackWidget('feedback-9').show('error!');
+
+        messages = Array.of(JSON.parse(localStorage.getItem('feedback_widget')));
+        expect(Object.keys(messages[0]).length).toBe(10);
+
+        for (delta = 0; delta < 10; delta++) {
+            new FeedbackWidget('feedback-9').show('error!');
+
+            let messages = Array.of(JSON.parse(localStorage.getItem('feedback_widget')));
+            expect(Object.keys(messages[0]).length).toBe(11);
+        }
+    })
 });
