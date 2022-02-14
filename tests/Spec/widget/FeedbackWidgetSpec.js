@@ -43,8 +43,8 @@ describe('Feedback widget behavior', function () {
         expect($('#feedback-danger').hasClass('alert-danger')).toBeTruthy()
     });
 
-    it('logs the feedback', function () {
-        localStorage.removeItem('feedback_widget')
+    it('logs the feedback when showing the alert', function () {
+        localStorage.removeItem('feedback_widget');
 
         new FeedbackWidget('feedback-danger').show('test');
         var messages = Array.of(JSON.parse(localStorage.getItem('feedback_widget')));
@@ -65,31 +65,44 @@ describe('Feedback widget behavior', function () {
     })
 
     it('removes the logged feedback after more than 10 logs', function () {
-        localStorage.removeItem('feedback_widget')
+        localStorage.removeItem('feedback_widget');
 
-        new FeedbackWidget('feedback-1').show('error!');
-        new FeedbackWidget('feedback-2').show('error!');
-        new FeedbackWidget('feedback-3').show('error!');
-        new FeedbackWidget('feedback-4').show('error!');
-        new FeedbackWidget('feedback-5').show('error!');
-        new FeedbackWidget('feedback-6').show('error!');
-        new FeedbackWidget('feedback-7').show('error!');
-        new FeedbackWidget('feedback-8').show('error!');
-        new FeedbackWidget('feedback-9').show('error!');
+        const widget =  new FeedbackWidget('feedback-1');
+        widget.log('error!', FeedbackTypes.danger);
+        widget.log('error!', FeedbackTypes.danger);
+        widget.log('error!', FeedbackTypes.danger);
+        widget.log('error!', FeedbackTypes.danger);
+        widget.log('error!', FeedbackTypes.danger);
+        widget.log('error!', FeedbackTypes.danger);
+        widget.log('error!', FeedbackTypes.danger);
+        widget.log('error!', FeedbackTypes.danger);
+        widget.log('error!', FeedbackTypes.danger);
 
         let messages = Array.of(JSON.parse(localStorage.getItem('feedback_widget')));
         expect(Object.keys(messages[0]).length).toBe(9);
 
-        new FeedbackWidget('feedback-9').show('error!');
+        widget.log('error!', FeedbackTypes.danger);
 
         messages = Array.of(JSON.parse(localStorage.getItem('feedback_widget')));
         expect(Object.keys(messages[0]).length).toBe(10);
 
         for (delta = 0; delta < 10; delta++) {
-            new FeedbackWidget('feedback-9').show('error!');
+            widget.log('error!', FeedbackTypes.danger);
 
             let messages = Array.of(JSON.parse(localStorage.getItem('feedback_widget')));
             expect(Object.keys(messages[0]).length).toBe(11);
         }
     })
+
+    it('should clear the log when requested', function () {
+        localStorage.removeItem('feedback_widget');
+
+        const widget =  new FeedbackWidget('feedback-2');
+        widget.log('error!', FeedbackTypes.danger);
+
+        expect(localStorage.getItem('feedback_widget') !== null).toBeTruthy();
+
+        widget.removeLog();
+        expect(localStorage.getItem('feedback_widget')).toBeNull();
+    });
 });
