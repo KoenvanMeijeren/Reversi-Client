@@ -1,4 +1,18 @@
 /**
+ * The various feedback types.
+ *
+ * @type {Readonly<{secondary: string, success: string, warning: string, danger: string, primary: string, info: string}>}
+ */
+const FeedbackTypes = Object.freeze({
+    primary: 'primary',
+    secondary: 'secondary',
+    success: 'success',
+    danger: 'danger',
+    warning: 'warning',
+    info: 'info',
+});
+
+/**
  * Provides widget for giving feedback.
  */
 class FeedbackWidget {
@@ -12,7 +26,12 @@ class FeedbackWidget {
      *   The id of the element.
      */
     constructor(elementId) {
-        this.#elementId = elementId;
+        this.#elementId = '#' + elementId;
+
+        const element = this.#getElement();
+        if (element.length < 1) {
+            $('body').append("<div id='"+ elementId +"' class='alert d-none' role='alert'></div>")
+        }
     }
 
     /**
@@ -27,14 +46,21 @@ class FeedbackWidget {
 
     /**
      * Shows the element.
+     *
+     * @param {string} message
+     *   The message.
+     * @param {FeedbackTypes} type
+     *   The type of the message. E.g. success or error.
      */
-    show() {
+    show(message, type) {
         const element = this.#getElement();
         if (element === undefined || element === null) {
             return;
         }
 
-        element.style.display = 'block';
+        element.text(message);
+        element.addClass('d-block');
+        element.addClass('alert-' + type);
     }
 
     /**
@@ -46,17 +72,18 @@ class FeedbackWidget {
             return;
         }
 
-        element.style.display = 'none';
+        element.removeClass('d-block');
+        element.addClass('d-none');
     }
 
     /**
      * Gets the element.
      *
-     * @returns {HTMLElement}
+     * @returns {jQuery}
      *   The HTML element.
      */
     #getElement() {
-        return document.getElementById(this.elementId);
+        return $(this.elementId);
     }
 
 }

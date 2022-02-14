@@ -15,27 +15,27 @@ describe('Feedback widget behavior', function () {
         const feedbackWidgetSpec = new FeedbackWidget('feedback-success');
 
         feedbackWidgetSpec.show();
-        expect($('#feedback-success').attr('style')).toBe('display: block;');
+        expect($('#feedback-success').hasClass('d-block')).toBeTruthy();
         feedbackWidgetSpec.hide();
-        expect($('#feedback-success').attr('style')).toBe('display: none;');
+        expect($('#feedback-success').hasClass('d-none')).toBeTruthy();
         feedbackWidgetSpec.show();
-        expect($('#feedback-success').attr('style')).toBe('display: block;');
+        expect($('#feedback-success').hasClass('d-block')).toBeTruthy();
     });
 
     it('should have an initialized error feedback widget', function () {
         const feedbackWidgetSpec = new FeedbackWidget('feedback-danger');
 
         expect($('#feedback-danger')).toBeDefined();
-        expect($('#feedback-danger').attr('style')).toBe('display: none;');
+        expect($('#feedback-danger').hasClass('d-none')).toBeTruthy();
     });
 
     it('can hide or show the error feedback widget', function () {
         const feedbackWidgetSpec = new FeedbackWidget('feedback-danger');
 
-        expect($('#feedback-danger').attr('style')).toBe('display: none;');
+        expect($('#feedback-danger').hasClass('d-none')).toBeTruthy();
         feedbackWidgetSpec.show();
-        expect($('#feedback-danger').attr('style')).toBe('display: block;');
+        expect($('#feedback-danger').hasClass('d-block')).toBeTruthy()
         feedbackWidgetSpec.hide();
-        expect($('#feedback-danger').attr('style')).toBe('display: none;');
+        expect($('#feedback-danger').hasClass('d-none')).toBeTruthy()
     });
 });
