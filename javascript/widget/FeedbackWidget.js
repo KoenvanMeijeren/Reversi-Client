@@ -50,9 +50,9 @@ class FeedbackWidget {
      * @param {string} message
      *   The message.
      * @param {FeedbackTypes} type
-     *   The type of the message. E.g. success or error.
+     *   The type of the message. E.g. success or error. Defaults to info.
      */
-    show(message, type) {
+    show(message, type = FeedbackTypes.info) {
         const element = this.#getElement();
         if (element === undefined || element === null) {
             return;
