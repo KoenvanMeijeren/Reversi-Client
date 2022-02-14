@@ -72,6 +72,24 @@ class FeedbackWidget {
     }
 
     /**
+     * Displays the history of the feedback.
+     *
+     * @returns string
+     *   The renderable history.
+     */
+    history() {
+        const logs = Object.values(JSON.parse(localStorage.getItem(this.#storageKey)));
+        let output = String();
+        for (let delta = 0; delta < Object.keys(logs).length; delta++) {
+            const log = logs[delta];
+
+            output += `${log.type}  -  ${log.message} <\\n>`;
+        }
+
+        return output;
+    }
+
+    /**
      * Logs the message to the storage.
      *
      * @param {string} message
