@@ -1,0 +1,31 @@
+<html>
+<head>
+    <!-- Initialize Jasmine tests. -->
+    <link rel="shortcut icon" type="image/png" href="jasmine/lib/jasmine/jasmine_favicon.png">
+    <link rel="stylesheet" type="text/css" href="jasmine/lib/jasmine/jasmine.css">
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script type="text/javascript" src="jasmine/lib/jasmine/jasmine.js"></script>
+    <script type="text/javascript" src="jasmine/lib/jasmine/jasmine-html.js"></script>
+    <script type="text/javascript" src="jasmine/lib/jasmine/boot.js"></script>
+    <script type="text/javascript" src="jasmine/lib/jasmine/mock-ajax.js"></script>
+    <script type="text/javascript" src="app.js"></script>
+
+    <!-- Required code in order to run the tests. -->
+    <script src="../javascript/widget/FeedbackWidget.js" type="text/javascript"></script>
+
+    <!-- Feature tests -->
+    <script src="./Spec/ExampleSpec.js" type="text/javascript"></script>
+    <script src="./Spec/widget/FeedbackWidgetSpec.js" type="text/javascript"></script>
+</head>
+<body>
+
+<div id="feedback-success" class="alert alert-success" role="alert">
+    <p>Veel succes met deze module!</p>
+</div>
+
+<div id="feedback-danger" class="alert alert-danger" role="alert" style="display: none;">
+    <p>Pas op voor loslopende bits.</p>
+</div>
+
+</body>
+</html>
