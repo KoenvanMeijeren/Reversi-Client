@@ -8,9 +8,14 @@ const Game = (function (url) {
 
     /**
      * Initializes the game object.
+     *
+     * @param {function} callback
+     *   The callable function. This function is called after initializing the game.
      */
-    const init = function () {
+    const init = function (callback) {
         console.log(config.apiUrl)
+
+        callback();
     }
 
     return {
