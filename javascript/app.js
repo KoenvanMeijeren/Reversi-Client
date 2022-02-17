@@ -5,5 +5,9 @@ $(document).ready(function () {
     const errorFeedBackWidget = new FeedbackWidget('feedback-danger');
     errorFeedBackWidget.show('Haha error!', FeedbackTypes.danger);
 
-    Game.init();
+    Game.init(afterGameInit);
+
+    function afterGameInit() {
+        console.log('Game init voltooid')
+    }
 });
