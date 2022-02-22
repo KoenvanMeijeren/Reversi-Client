@@ -17,7 +17,18 @@ const FeedbackTypes = Object.freeze({
  */
 class FeedbackWidget {
 
+    /**
+     * The key of the storage.
+     *
+     * @type {string}
+     */
     #storageKey = 'feedback_widget';
+
+    /**
+     * The id of the element.
+     *
+     * @type {string}
+     */
     #elementId;
 
     /**
