@@ -1,0 +1,34 @@
+{
+  "name": "reversi-client",
+  "version": "1.0.0",
+  "description": "Provides the client for the Reversi Game",
+  "main": "./javascript/app.js",
+  "directories": {
+    "test": "tests"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/KoenvanMeijeren/Reversi-Client.git"
+  },
+  "keywords": [
+    "Reversi"
+  ],
+  "author": "Koen van Meijeren",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/KoenvanMeijeren/Reversi-Client/issues"
+  },
+  "homepage": "https://github.com/KoenvanMeijeren/Reversi-Client#readme",
+  "devDependencies": {
+    "@babel/core": "^7.17.5",
+    "@babel/preset-env": "^7.16.11",
+    "gulp": "^4.0.2",
+    "gulp-babel": "^8.0.0",
+    "gulp-concat": "^2.6.1",
+    "gulp-order": "^1.2.0",
+    "gulp-uglify": "^3.0.2"
+  }
+}
