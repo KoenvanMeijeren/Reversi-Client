@@ -42,8 +42,10 @@ class FeedbackWidget {
 
         const element = this.#getElement();
         if (element.length < 1) {
-            $('body').append("<div id='"+ elementId +"' class='alert d-none' role='alert'></div>")
+            $('body').append("<div id='" + elementId + "' class='alert' role='alert'></div>")
         }
+
+        this.hide();
     }
 
     /**
@@ -69,8 +71,18 @@ class FeedbackWidget {
 
         const element = this.#getElement();
         element.text(message);
-        element.addClass('d-block');
+
+        element.removeClass(function (index, className) {
+            return (className.match(/(^|\s)alert-\S+/g) || []).join(' ');
+        });
         element.addClass('alert-' + type);
+
+        if (element.hasClass('d-block')) {
+            return;
+        }
+
+        element.removeClass('d-none');
+        element.addClass('d-block');
     }
 
     /**
@@ -78,6 +90,10 @@ class FeedbackWidget {
      */
     hide() {
         const element = this.#getElement();
+        if (element.hasClass('d-none')) {
+            return;
+        }
+
         element.removeClass('d-block');
         element.addClass('d-none');
     }

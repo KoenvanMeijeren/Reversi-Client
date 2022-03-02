@@ -2,7 +2,8 @@ const {src, dest} = require('gulp');
 const order = require('gulp-order');
 const concat = require('gulp-concat');
 const babel = require('gulp-babel');
-const uglify = require('gulp-uglify');
+const minifyJs = require('gulp-uglify');
+const cleanCSS = require('gulp-clean-css');
 
 /**
  * Creates the distributed files.
@@ -17,7 +18,7 @@ const uglify = require('gulp-uglify');
  * @return {function(): *}
  *   The pipeline.
  */
-const dist = function (backendPath, javascriptFiles, javascriptFilesOrder) {
+const distJavascript = function (backendPath, javascriptFiles, javascriptFilesOrder) {
     return function () {
         return src(javascriptFiles)
             .pipe(order(javascriptFilesOrder, {base: './'}))
@@ -25,10 +26,35 @@ const dist = function (backendPath, javascriptFiles, javascriptFilesOrder) {
             .pipe(babel({
                 presets: ['@babel/preset-env']
             }))
-            .pipe(uglify())
+            .pipe(minifyJs())
             .pipe(dest('dist'))
             .pipe(dest(`${backendPath}/dist`));
     }
 };
 
-exports.dist = dist;
+/**
+ * Creates the distributed files.
+ *
+ * @param {string} backendPath
+ *   The path to the backend directory.
+ * @param {string[]} cssFiles
+ *   The css files.
+ * @param {string[]} cssFilesOrder
+ *   The order of the css files.
+ *
+ * @return {function(): *}
+ *   The pipeline.
+ */
+const distCss = function (backendPath, cssFiles, cssFilesOrder) {
+    return function () {
+        return src(cssFiles)
+            .pipe(order(cssFilesOrder, {base: './'}))
+            .pipe(concat('app.min.css'))
+            .pipe(cleanCSS())
+            .pipe(dest('dist'))
+            .pipe(dest(`${backendPath}/dist`));
+    }
+};
+
+exports.distJavascript = distJavascript;
+exports.distCss = distCss;
