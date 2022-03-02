@@ -1,14 +1,10 @@
 const config = require('./config');
-const dist = require('./tasks/dist').dist(config.localServerProjectPath, config.files.js, config.fileOrder.js);
+const distJavascript = require('./tasks/dist').distJavascript(config.localServerProjectPath, config.files.js, config.fileOrder.js);
+const distCss = require('./tasks/dist').distCss(config.localServerProjectPath, config.files.css, config.fileOrder.css);
 
 // The name of the task. This is name is also used for running the task, for example 'gulp js'.
-dist.displayName = 'js';
+distJavascript.displayName = 'js';
+distCss.displayName = 'css';
 
-const hello = function (done) {
-    console.log(`Groeten van ${config.firstname}!`)
-    done();
-}
-
-
-exports.default = hello;
-exports.dist = dist;
+exports.distJavascript = distJavascript;
+exports.distCss = distCss;
