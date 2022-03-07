@@ -3,6 +3,7 @@ $(document).ready(function () {
     successFeedBackWidget.show('Veel succes met deze module!', FeedbackTypes.success);
 
     const errorFeedBackWidget = new FeedbackWidget('feedback-danger');
+    errorFeedBackWidget.addActions('Weigeren', 'Akkoord');
     errorFeedBackWidget.show('Haha error!', FeedbackTypes.danger);
 
     Env.init(Environments.production);

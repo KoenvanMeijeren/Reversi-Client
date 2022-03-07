@@ -42,10 +42,30 @@ class FeedbackWidget {
 
         const element = this.#getElement();
         if (element.length < 1) {
-            $('body').append("<div id='" + elementId + "' class='alert' role='alert'></div>")
+            $('body').append(`<div id='${elementId}' class='alert' role='alert'>
+<button type="button" class="btn btn-info float-end">X</button>
+<div class="message-container"><span class="icon"></span><div class="message"></div> </div>
+</div>`)
         }
 
         this.hide();
+    }
+
+    /**
+     * Adds actions to the widget.
+     *
+     * @param {string} decline
+     *   The decline button text.
+     * @param {string} accept
+     *   The accept button text.
+     */
+    addActions(decline = 'Cancel', accept = 'Ok') {
+        const element = this.#getElement();
+
+        element.append(`<div class="actions mt-5 ml-auto w-25 text-end">
+    <button type="button" class="btn btn-danger">${decline}</button>
+    <button type="button" class="btn btn-primary">${accept}</button>
+</div>`)
     }
 
     /**
@@ -70,7 +90,7 @@ class FeedbackWidget {
         this.log(message, type);
 
         const element = this.#getElement();
-        element.text(message);
+        element.find('.message-container > .message').text(message);
 
         element.removeClass(function (index, className) {
             return (className.match(/(^|\s)alert-\S+/g) || []).join(' ');
