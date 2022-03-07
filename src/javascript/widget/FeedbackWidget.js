@@ -62,9 +62,9 @@ class FeedbackWidget {
     addActions(decline = 'Cancel', accept = 'Ok') {
         const element = this.#getElement();
 
-        element.append(`<div class="actions mt-5 ml-auto w-25 text-end">
-    <button type="button" class="btn btn-danger">${decline}</button>
-    <button type="button" class="btn btn-primary">${accept}</button>
+        element.append(`<div class="actions mt-5 justify-content-end text-end">
+    <button type="button" class="btn btn-danger mx-sm-2 mt-sm-2">${decline}</button>
+    <button type="button" class="btn btn-primary mx-sm-2 mt-sm-2">${accept}</button>
 </div>`)
     }
 
