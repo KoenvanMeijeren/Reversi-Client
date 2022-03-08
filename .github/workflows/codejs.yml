@@ -45,4 +45,4 @@ jobs:
         run: npm install
 
       - name: Run internal tests
-        run: npm run test-internal
+        run: npm run code-standards
