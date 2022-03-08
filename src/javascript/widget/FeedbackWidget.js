@@ -43,7 +43,7 @@ class FeedbackWidget {
         const element = this.#getElement();
         if (element.length < 1) {
             $('body').append(`<div id='${elementId}' class='alert' role='alert'>
-<button type="button" class="btn btn-info float-end">X</button>
+<button type="button" class="alert-close" aria-label="Close"></button>
 <div class="message-container"><span class="icon"></span><div class="message"></div> </div>
 </div>`)
         }
