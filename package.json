@@ -8,7 +8,7 @@
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "code-standards": "npx standard src/ | snazzy"
+    "code-standards": "./node_modules/.bin/eslint src/"
   },
   "repository": {
     "type": "git",
