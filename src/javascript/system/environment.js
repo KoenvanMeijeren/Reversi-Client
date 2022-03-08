@@ -5,11 +5,10 @@
  */
 const Environments = Object.freeze({
   development: 'development',
-  production: 'production',
+  production: 'production'
 })
 
-const Env = function () {
-
+const Env = (function () {
   /**
    * The environment.
    *
@@ -67,4 +66,4 @@ const Env = function () {
     isProduction: isProduction,
     get: get
   }
-}()
+}())

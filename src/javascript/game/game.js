@@ -1,9 +1,8 @@
 const apiUrl = '/api/url'
 
 const Game = (function (url) {
-
-  let config = {
-    apiUrl: url,
+  const config = {
+    apiUrl: url
   }
 
   /**

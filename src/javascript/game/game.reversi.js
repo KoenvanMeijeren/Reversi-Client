@@ -1,6 +1,5 @@
 Game.Reversi = (function () {
-
-  let config = {}
+  const config = {}
 
   /**
    * Initializes the game object.

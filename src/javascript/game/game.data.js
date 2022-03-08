@@ -1,5 +1,4 @@
 Game.Data = (function () {
-
   /**
    * The config.
    *
@@ -114,9 +113,9 @@ Game.Data = (function () {
   function getMockData (url) {
     const data = config.mock.find(row => row.subUrl === url)
 
-    return new Promise(((resolve, reject) => {
+    return new Promise((resolve, reject) => {
       resolve(data.data)
-    }))
+    })
   }
 
   return {

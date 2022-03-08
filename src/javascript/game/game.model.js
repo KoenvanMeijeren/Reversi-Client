@@ -1,6 +1,5 @@
 Game.Model = (function () {
-
-  let config = {}
+  const config = {}
 
   /**
    * Initializes the game object.
