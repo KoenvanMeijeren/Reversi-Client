@@ -1289,16 +1289,16 @@ getJasmineRequireObj().Env = function(j$) {
           defaultResourcesForRunnable(suite.id, suite.parentSuite.id);
           reporter.suiteStarted(suite.result, next);
         },
-        nodeComplete: function(suite, result, next) {
+        nodeComplete: function (suite, result, next) {
           if (suite !== currentSuite()) {
-            throw new Error('Tried to complete the wrong suite');
+            throw new Error('Tried to complete the wrong suite')
           }
 
-          clearResourcesForRunnable(suite.id);
-          currentlyExecutingSuites.pop();
+          clearResourcesForRunnable(suite.id)
+          currentlyExecutingSuites.pop()
 
           if (result.status === 'failed') {
-            hasFailures = true;
+            hasFailures = true
           }
 
           reporter.suiteDone(result, next);
