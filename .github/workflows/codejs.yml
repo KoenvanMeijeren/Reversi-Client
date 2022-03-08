@@ -44,5 +44,8 @@ jobs:
       - name: Install dependencies
         run: npm install
 
-      - name: Run internal tests
+      - name: Build project
+        run: npm run build
+
+      - name: Run code standards checks
         run: npm run code-standards
