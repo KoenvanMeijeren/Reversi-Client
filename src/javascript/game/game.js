@@ -1,22 +1,22 @@
-const apiUrl = '/api/url';
+const apiUrl = '/api/url'
 
 const Game = (function (url) {
 
-    let config = {
-        apiUrl: url,
-    }
+  let config = {
+    apiUrl: url,
+  }
 
-    /**
-     * Initializes the game object.
-     *
-     * @param {function} callback
-     *   The callable function. This function is called after initializing the game.
-     */
-    const init = function (callback) {
-        callback();
-    }
+  /**
+   * Initializes the game object.
+   *
+   * @param {function} callback
+   *   The callable function. This function is called after initializing the game.
+   */
+  const init = function (callback) {
+    callback()
+  }
 
-    return {
-        init: init
-    }
-})(apiUrl);
+  return {
+    init: init
+  }
+})(apiUrl)

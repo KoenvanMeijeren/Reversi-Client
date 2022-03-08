@@ -1,15 +1,15 @@
 Game.Model = (function () {
 
-    let config = {}
+  let config = {}
 
-    /**
-     * Initializes the game object.
-     */
-    const init = function () {
+  /**
+   * Initializes the game object.
+   */
+  const init = function () {
 
-    }
+  }
 
-    return {
-        init: init
-    }
-})();
+  return {
+    init: init
+  }
+})()
