@@ -2,12 +2,13 @@
   "name": "reversi-client",
   "version": "1.0.0",
   "description": "Provides the client for the Reversi Game",
-  "main": "src/javascript/app.js",
+  "main": "dist/app.min.js",
   "directories": {
+    "src": "src",
     "test": "tests"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "gulp js && gulp css",
     "code-standards": "./node_modules/.bin/eslint src/"
   },
   "repository": {
