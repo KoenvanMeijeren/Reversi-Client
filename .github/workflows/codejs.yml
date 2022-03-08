@@ -16,12 +16,12 @@ on:
       - hotfix/*
 
 jobs:
-  test-internal:
+  analyze:
     runs-on: ubuntu-latest
 
     strategy:
       matrix:
-        node-version: [12.22, 12, 14.17, 14, 16.0.0, 16]
+        node-version: [ 12.22, 12, 14.17, 14, 16.0.0, 16 ]
       fail-fast: false
 
     steps:
