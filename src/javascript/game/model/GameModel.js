@@ -10,7 +10,7 @@ const Status = Object.freeze({
     Playing: 'Playing',
     Finished: 'Finished',
     Quit: 'Quit',
-})
+});
 
 /**
  * The various colors.
@@ -21,7 +21,7 @@ const Color = Object.freeze({
     White: 'White',
     Black: 'Black',
     None: 'None',
-})
+});
 
 class GameModel {
 
@@ -30,56 +30,56 @@ class GameModel {
      *
      * @type {number}
      */
-    #Id
+    #Id;
 
     /**
      * The description.
      *
      * @type {string}
      */
-    #Description
+    #Description;
 
     /**
      * The token.
      *
      * @type {string}
      */
-    #Token
+    #Token;
 
     /**
      * The player one object.
      *
      * @type {PlayerModel}
      */
-    #PlayerOne
+    #PlayerOne;
 
     /**
      * The player two object.
      *
      * @type {PlayerModel}
      */
-    #PlayerTwo
+    #PlayerTwo;
 
     /**
      * The id.
      *
      * @type {PlayerModel}
      */
-    #CurrentPlayer
+    #CurrentPlayer;
 
     /**
      * The board.
      *
      * @type {Array<Array<Color>>}
      */
-    #Board
+    #Board;
 
     /**
      * The status.
      *
      * @type {Status}
      */
-    #Status
+    #Status;
 
     /**
    * Constructs the new game object.
@@ -94,46 +94,46 @@ class GameModel {
      * @param {Status} status
      */
     constructor (id, description, token, playerOne, playerTwo, currentPlayer, board, status) {
-        this.#Id = id
-        this.#Description = description
-        this.#Token = token
-        this.#PlayerOne = playerOne
-        this.#PlayerTwo = playerTwo
-        this.#CurrentPlayer = currentPlayer
-        this.#Board = this.BoardToArray(board)
-        this.#Status = status
+        this.#Id = id;
+        this.#Description = description;
+        this.#Token = token;
+        this.#PlayerOne = playerOne;
+        this.#PlayerTwo = playerTwo;
+        this.#CurrentPlayer = currentPlayer;
+        this.#Board = this.BoardToArray(board);
+        this.#Status = status;
     }
 
     get Id () {
-        return this.#Id
+        return this.#Id;
     }
 
     get Description () {
-        return this.#Description
+        return this.#Description;
     }
 
     get Token () {
-        return this.#Token
+        return this.#Token;
     }
 
     get PlayerOne () {
-        return this.#PlayerOne
+        return this.#PlayerOne;
     }
 
     get PlayerTwo () {
-        return this.#PlayerTwo
+        return this.#PlayerTwo;
     }
 
     get CurrentPlayer () {
-        return this.#CurrentPlayer
+        return this.#CurrentPlayer;
     }
 
     get Board () {
-        return this.#Board
+        return this.#Board;
     }
 
     get Status () {
-        return this.#Status
+        return this.#Status;
     }
 
     /**
@@ -144,9 +144,9 @@ class GameModel {
      * @param {Status} status
      */
     UpdateStatus (board, currentPlayer, status) {
-        this.#Board = this.BoardToArray(board)
-        this.#CurrentPlayer = currentPlayer
-        this.#Status = status
+        this.#Board = this.BoardToArray(board);
+        this.#CurrentPlayer = currentPlayer;
+        this.#Status = status;
     }
 
     /**
@@ -160,36 +160,36 @@ class GameModel {
      */
     BoardToArray (board) {
         const input = board
-          .replace('[[', '')
-          .replace(']]', '')
-          .split('],[')
+            .replace('[[', '')
+            .replace(']]', '')
+            .split('],[');
 
-        const convertedInput = []
+        const convertedInput = [];
         input.forEach(function (values, index) {
-            convertedInput[index] = values.split(',')
-        })
+            convertedInput[index] = values.split(',');
+        });
 
-        let result = []
+        let result = [];
         convertedInput.forEach(function (row, rowIndex) {
             row.forEach(function (column, columnIndex) {
                 switch (column) {
-                    case '0':
-                        row[columnIndex] = Color.None
-                        break
-                    case '1':
-                        row[columnIndex] = Color.White
-                        break
-                    case '2':
-                        row[columnIndex] = Color.Black
-                        break
-                    default:
-                        throw new Error('Invalid value given! Expected one of the color values, but received: ' + column)
+                case '0':
+                    row[columnIndex] = Color.None;
+                    break;
+                case '1':
+                    row[columnIndex] = Color.White;
+                    break;
+                case '2':
+                    row[columnIndex] = Color.Black;
+                    break;
+                default:
+                    throw new Error('Invalid value given! Expected one of the color values, but received: ' + column);
                 }
-            })
+            });
 
-            result[rowIndex] = row
-        })
+            result[rowIndex] = row;
+        });
 
-        return result
+        return result;
     }
 }

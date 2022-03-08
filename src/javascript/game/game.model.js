@@ -1,14 +1,14 @@
 Game.Model = (function () {
-  const config = {}
+    const config = {};
 
-  /**
-   * Initializes the game object.
-   */
-  const init = function () {
+    /**
+     * Initializes the game object.
+     */
+    const init = function () {
 
-  }
+    };
 
-  return {
-    init: init
-  }
-})()
+    return {
+        init: init
+    };
+})();
