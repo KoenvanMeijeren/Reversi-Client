@@ -66,4 +66,4 @@ const Env = (function () {
     isProduction: isProduction,
     get: get
   }
-}())
+}());

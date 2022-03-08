@@ -18,4 +18,4 @@ const Game = (function (url) {
   return {
     init: init
   }
-})(apiUrl)
+})(apiUrl);

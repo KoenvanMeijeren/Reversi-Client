@@ -1,27 +1,27 @@
 Game.Data = (function () {
-  /**
-   * The config.
-   *
-   * @type {{baseUrl: string, mock: [{subUrl: string, data: GameModel}]}}
-   */
-  const config = {
-    baseUrl: 'https://localhost:7042/api/Game',
-    mock: [
-      {
-        subUrl: 'token/',
-        data: new GameModel(
-          1,
-          'This a Reversi game.',
-          'fNtIKMuvJkSDBvuB8lbfCwii',
-          new PlayerOne('abcdef'),
-          new PlayerTwo('qwerty'),
-          new PlayerOne('abcdef'),
-          '[[0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0],[0,0,0,1,2,0,0,0],[0,0,0,2,1,0,0,0],[0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0]]',
-          Status.Created
-        )
-      }
-    ]
-  }
+    /**
+     * The config.
+     *
+     * @type {{baseUrl: string, mock: [{subUrl: string, data: GameModel}]}}
+     */
+    const config = {
+      baseUrl: 'https://localhost:7042/api/Game',
+      mock: [
+        {
+          subUrl: 'token/',
+          data: new GameModel(
+            1,
+            'This a Reversi game.',
+            'fNtIKMuvJkSDBvuB8lbfCwii',
+            new PlayerOne('abcdef'),
+            new PlayerTwo('qwerty'),
+            new PlayerOne('abcdef'),
+            '[[0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0],[0,0,0,1,2,0,0,0],[0,0,0,2,1,0,0,0],[0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0]]',
+            Status.Created
+          )
+        }
+      ]
+    }
 
   /**
    * Initializes the game object.
@@ -122,4 +122,4 @@ Game.Data = (function () {
     init: init,
     get: get
   }
-})()
+})();

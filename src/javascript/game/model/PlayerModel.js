@@ -1,11 +1,11 @@
 class PlayerModel {
 
-  /**
-   * The token of the player.
-   *
-   *@type {string}
-   */
-  #Token
+    /**
+     * The token of the player.
+     *
+     *@type {string}
+     */
+    #Token
 
   /**
    * The color.

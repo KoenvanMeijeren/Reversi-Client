@@ -19,4 +19,4 @@ $(document).ready(function () {
 
     Game.Data.get().then(game => console.log(game))
   }
-})
+});
