@@ -20,7 +20,7 @@ class PlayerModel {
      * @param {string} token
      * @param {Color} color
      */
-    constructor(token, color) {
+    constructor (token, color) {
         this.#Token = token;
         this.#Color = color;
     }
@@ -31,7 +31,7 @@ class PlayerModel {
      * @returns {string}
      *   The token.
      */
-    get Token() {
+    get Token () {
         return this.#Token;
     }
 
@@ -41,7 +41,7 @@ class PlayerModel {
      * @returns {Color}
      *   The color.
      */
-    get Color() {
+    get Color () {
         return this.#Color;
     }
 }
@@ -54,7 +54,7 @@ class PlayerOne extends PlayerModel {
      * @param {string} token
      *   The token.
      */
-    constructor(token) {
+    constructor (token) {
         super(token, Color.White);
     }
 
@@ -68,7 +68,7 @@ class PlayerTwo extends PlayerModel {
      * @param {string} token
      *   The token.
      */
-    constructor(token) {
+    constructor (token) {
         super(token, Color.Black);
     }
 
@@ -82,7 +82,7 @@ class PlayerUndefined extends PlayerModel {
      * @param {string} token
      *   The token.
      */
-    constructor(token) {
+    constructor (token) {
         super(token, Color.None);
     }
 

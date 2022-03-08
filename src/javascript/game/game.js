@@ -1,10 +1,9 @@
 const apiUrl = '/api/url';
 
 const Game = (function (url) {
-
-    let config = {
-        apiUrl: url,
-    }
+    const config = {
+        apiUrl: url
+    };
 
     /**
      * Initializes the game object.
@@ -14,9 +13,9 @@ const Game = (function (url) {
      */
     const init = function (callback) {
         callback();
-    }
+    };
 
     return {
         init: init
-    }
+    };
 })(apiUrl);

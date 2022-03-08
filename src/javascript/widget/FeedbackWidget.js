@@ -37,12 +37,15 @@ class FeedbackWidget {
      * @param {string} elementId
      *   The id of the element.
      */
-    constructor(elementId) {
+    constructor (elementId) {
         this.#elementId = '#' + elementId;
 
         const element = this.#getElement();
         if (element.length < 1) {
-            $('body').append("<div id='" + elementId + "' class='alert' role='alert'></div>")
+            $('body').append(`<div id='${elementId}' class='alert' role='alert'>
+<button type="button" class="alert-close" aria-label="Close"></button>
+<div class="message-container"><span class="icon"></span><div class="message"></div> </div>
+</div>`);
         }
 
         this.hide();
@@ -54,8 +57,25 @@ class FeedbackWidget {
      * @returns {string}
      *   The element id.
      */
-    get elementId() {
+    get elementId () {
         return this.#elementId;
+    }
+
+    /**
+     * Adds actions to the widget.
+     *
+     * @param {string} decline
+     *   The decline button text.
+     * @param {string} accept
+     *   The accept button text.
+     */
+    addActions (decline = 'Cancel', accept = 'Ok') {
+        const element = this.#getElement();
+
+        element.append(`<div class="actions mt-5 justify-content-end text-end">
+    <button type="button" class="btn btn-danger mx-sm-2 mt-sm-2">${decline}</button>
+    <button type="button" class="btn btn-primary mx-sm-2 mt-sm-2">${accept}</button>
+</div>`);
     }
 
     /**
@@ -66,11 +86,11 @@ class FeedbackWidget {
      * @param {FeedbackTypes} type
      *   The type of the message. E.g. success or error. Defaults to info.
      */
-    show(message, type = FeedbackTypes.info) {
+    show (message, type = FeedbackTypes.info) {
         this.log(message, type);
 
         const element = this.#getElement();
-        element.text(message);
+        element.find('.message-container > .message').text(message);
 
         element.removeClass(function (index, className) {
             return (className.match(/(^|\s)alert-\S+/g) || []).join(' ');
@@ -88,7 +108,7 @@ class FeedbackWidget {
     /**
      * Hides the element.
      */
-    hide() {
+    hide () {
         const element = this.#getElement();
         if (element.hasClass('d-none')) {
             return;
@@ -104,7 +124,7 @@ class FeedbackWidget {
      * @returns string
      *   The renderable history.
      */
-    history() {
+    history () {
         const logs = Object.values(JSON.parse(localStorage.getItem(this.#storageKey)));
         let output = String();
         for (let delta = 0; delta < Object.keys(logs).length; delta++) {
@@ -124,7 +144,7 @@ class FeedbackWidget {
      * @param {FeedbackTypes} type
      *   The type of the message. E.g. success or error. Defaults to info.
      */
-    log(message, type) {
+    log (message, type) {
         const jsonMessage = {
             message: message,
             type: type,
@@ -155,7 +175,7 @@ class FeedbackWidget {
     /**
      * Removes all messages from the storage.
      */
-    removeLog() {
+    removeLog () {
         localStorage.removeItem(this.#storageKey);
     }
 
@@ -165,7 +185,7 @@ class FeedbackWidget {
      * @returns {jQuery}
      *   The HTML element.
      */
-    #getElement() {
+    #getElement () {
         return $(this.elementId);
     }
 

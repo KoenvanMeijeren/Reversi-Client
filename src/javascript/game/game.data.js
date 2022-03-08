@@ -1,5 +1,4 @@
 Game.Data = (function () {
-
     /**
      * The config.
      *
@@ -22,12 +21,12 @@ Game.Data = (function () {
                 )
             }
         ]
-    }
+    };
 
     /**
      * Initializes the game object.
      */
-    function init() {
+    function init () {
 
     }
 
@@ -37,7 +36,7 @@ Game.Data = (function () {
      * @returns {Promise}
      *   The game.
      */
-    function get() {
+    function get () {
         if (Env.isDevelopment()) {
             return getMockData('token/');
         }
@@ -61,7 +60,7 @@ Game.Data = (function () {
                     return;
                 }
 
-                console.log('Er ging iets fout tijdens het ophalen van de gegevens.')
+                console.log('Er ging iets fout tijdens het ophalen van de gegevens.');
             });
     }
 
@@ -76,8 +75,8 @@ Game.Data = (function () {
      * @returns {Promise}
      *   The promise.
      */
-    function getByToken(token, url) {
-        return getApiData(`${config.baseUrl}/${token}/${url}`)
+    function getByToken (token, url) {
+        return getApiData(`${config.baseUrl}/${token}/${url}`);
     }
 
     /**
@@ -89,7 +88,7 @@ Game.Data = (function () {
      * @returns {Promise}
      *   The promise.
      */
-    function getApiData(url) {
+    function getApiData (url) {
         return $.get(url)
             .then(response => response)
             .catch(exception => {
@@ -98,7 +97,7 @@ Game.Data = (function () {
                     return;
                 }
 
-                console.log('Er ging iets fout tijdens het ophalen van de gegevens.')
+                console.log('Er ging iets fout tijdens het ophalen van de gegevens.');
             });
     }
 
@@ -111,16 +110,16 @@ Game.Data = (function () {
      * @returns {Promise}
      *   The promise.
      */
-    function getMockData(url) {
+    function getMockData (url) {
         const data = config.mock.find(row => row.subUrl === url);
 
-        return new Promise(((resolve, reject) => {
+        return new Promise((resolve, reject) => {
             resolve(data.data);
-        }));
+        });
     }
 
     return {
         init: init,
         get: get
-    }
+    };
 })();

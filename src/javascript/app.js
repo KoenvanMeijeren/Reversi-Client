@@ -3,6 +3,7 @@ $(document).ready(function () {
     successFeedBackWidget.show('Veel succes met deze module!', FeedbackTypes.success);
 
     const errorFeedBackWidget = new FeedbackWidget('feedback-danger');
+    errorFeedBackWidget.addActions('Weigeren', 'Akkoord');
     errorFeedBackWidget.show('Haha error!', FeedbackTypes.danger);
 
     Env.init(Environments.production);
@@ -11,7 +12,7 @@ $(document).ready(function () {
     /**
      * Runs after initializing the game.
      */
-    function afterGameInit() {
+    function afterGameInit () {
         Game.Data.init();
         Game.Model.init();
         Game.Reversi.init();

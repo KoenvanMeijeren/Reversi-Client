@@ -5,11 +5,10 @@
  */
 const Environments = Object.freeze({
     development: 'development',
-    production: 'production',
+    production: 'production'
 });
 
-const Env = function () {
-
+const Env = (function () {
     /**
      * The environment.
      *
@@ -23,7 +22,7 @@ const Env = function () {
      * @param {Environments} env
      *   The current environment.
      */
-    function init(env = Environments.development) {
+    function init (env = Environments.development) {
         if (!Object.values(Environments).includes(env)) {
             throw new Error('Invalid environment given!');
         }
@@ -37,7 +36,7 @@ const Env = function () {
      * @returns {boolean}
      *   Whether the environment is development or not.
      */
-    function isDevelopment() {
+    function isDevelopment () {
         return environment === Environments.development;
     }
 
@@ -47,7 +46,7 @@ const Env = function () {
      * @returns {boolean}
      *   Whether the environment is production or not.
      */
-    function isProduction() {
+    function isProduction () {
         return environment === Environments.production;
     }
 
@@ -57,7 +56,7 @@ const Env = function () {
      * @return {Environments}
      *   The environment.
      */
-    function get() {
+    function get () {
         return environment;
     }
 
@@ -66,5 +65,5 @@ const Env = function () {
         isDevelopment: isDevelopment,
         isProduction: isProduction,
         get: get
-    }
-}();
+    };
+}());

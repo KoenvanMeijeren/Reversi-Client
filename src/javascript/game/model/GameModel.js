@@ -82,7 +82,7 @@ class GameModel {
     #Status;
 
     /**
-     * Constructs the new game object.
+   * Constructs the new game object.
      *
      * @param {number} id
      * @param {string} description
@@ -93,7 +93,7 @@ class GameModel {
      * @param {string} board
      * @param {Status} status
      */
-    constructor(id, description, token, playerOne, playerTwo, currentPlayer, board, status) {
+    constructor (id, description, token, playerOne, playerTwo, currentPlayer, board, status) {
         this.#Id = id;
         this.#Description = description;
         this.#Token = token;
@@ -104,35 +104,35 @@ class GameModel {
         this.#Status = status;
     }
 
-    get Id() {
+    get Id () {
         return this.#Id;
     }
 
-    get Description() {
+    get Description () {
         return this.#Description;
     }
 
-    get Token() {
+    get Token () {
         return this.#Token;
     }
 
-    get PlayerOne() {
+    get PlayerOne () {
         return this.#PlayerOne;
     }
 
-    get PlayerTwo() {
+    get PlayerTwo () {
         return this.#PlayerTwo;
     }
 
-    get CurrentPlayer() {
+    get CurrentPlayer () {
         return this.#CurrentPlayer;
     }
 
-    get Board() {
+    get Board () {
         return this.#Board;
     }
 
-    get Status() {
+    get Status () {
         return this.#Status;
     }
 
@@ -143,7 +143,7 @@ class GameModel {
      * @param {PlayerModel} currentPlayer
      * @param {Status} status
      */
-    UpdateStatus(board, currentPlayer, status) {
+    UpdateStatus (board, currentPlayer, status) {
         this.#Board = this.BoardToArray(board);
         this.#CurrentPlayer = currentPlayer;
         this.#Status = status;
@@ -158,7 +158,7 @@ class GameModel {
      * @return {Array<Array<Color>>}
      *   The board as object.
      */
-    BoardToArray(board) {
+    BoardToArray (board) {
         const input = board
             .replace('[[', '')
             .replace(']]', '')
@@ -173,17 +173,17 @@ class GameModel {
         convertedInput.forEach(function (row, rowIndex) {
             row.forEach(function (column, columnIndex) {
                 switch (column) {
-                    case '0':
-                        row[columnIndex] = Color.None;
-                        break;
-                    case '1':
-                        row[columnIndex] = Color.White;
-                        break;
-                    case '2':
-                        row[columnIndex] = Color.Black;
-                        break;
-                    default:
-                        throw new Error('Invalid value given! Expected one of the color values, but received: ' + column);
+                case '0':
+                    row[columnIndex] = Color.None;
+                    break;
+                case '1':
+                    row[columnIndex] = Color.White;
+                    break;
+                case '2':
+                    row[columnIndex] = Color.Black;
+                    break;
+                default:
+                    throw new Error('Invalid value given! Expected one of the color values, but received: ' + column);
                 }
             });
 
