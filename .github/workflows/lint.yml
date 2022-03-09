@@ -1,19 +1,9 @@
-name: Analyze Javascript code
+name: Lint
 
 on:
   push:
     branches:
-      - main
-      - task/*
-      - feature/*
-      - hotfix/*
-  pull_request:
-    # The branches below must be a subset of the branches above
-    branches:
-      - main
-      - task/*
-      - feature/*
-      - hotfix/*
+      - '*'
 
 jobs:
   analyze:
