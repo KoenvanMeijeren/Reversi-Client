@@ -1,11 +1,9 @@
 /**
  * The various feedback types.
  *
- * @type {Readonly<{secondary: string, success: string, warning: string, danger: string, primary: string, info: string}>}
+ * @type {Readonly<{success: string, warning: string, danger: string, info: string}>}
  */
 const FeedbackTypes = Object.freeze({
-    primary: 'primary',
-    secondary: 'secondary',
     success: 'success',
     danger: 'danger',
     warning: 'warning',
@@ -42,8 +40,8 @@ class FeedbackWidget {
 
         const element = this.#getElement();
         if (element.length < 1) {
-            $('body').append(`<div id='${elementId}' class='alert' role='alert'>
-<button type="button" class="alert-close" aria-label="Close"></button>
+            $('body').append(`<div id='${elementId}' class='message-alert' role='alert'>
+<button type="button" class="button button-danger button-close" aria-label="Close"></button>
 <div class="message-container"><span class="icon"></span><div class="message"></div> </div>
 </div>`);
         }
@@ -72,9 +70,9 @@ class FeedbackWidget {
     addActions (decline = 'Cancel', accept = 'Ok') {
         const element = this.#getElement();
 
-        element.append(`<div class="actions mt-5 justify-content-end text-end">
-    <button type="button" class="btn btn-danger mx-sm-2 mt-sm-2">${decline}</button>
-    <button type="button" class="btn btn-primary mx-sm-2 mt-sm-2">${accept}</button>
+        element.append(`<div class="actions">
+    <button type="button" class="button button-danger">${decline}</button>
+    <button type="button" class="button button-primary">${accept}</button>
 </div>`);
     }
 
@@ -93,16 +91,16 @@ class FeedbackWidget {
         element.find('.message-container > .message').text(message);
 
         element.removeClass(function (index, className) {
-            return (className.match(/(^|\s)alert-\S+/g) || []).join(' ');
+            return (className.match(/(^|\s)message-alert-\S+/g) || []).join(' ');
         });
-        element.addClass('alert-' + type);
+        element.addClass('message-alert-' + type);
 
-        if (element.hasClass('d-block')) {
+        if (element.hasClass('show')) {
             return;
         }
 
-        element.removeClass('d-none');
-        element.addClass('d-block');
+        element.removeClass('hide');
+        element.addClass('show');
     }
 
     /**
@@ -110,12 +108,12 @@ class FeedbackWidget {
      */
     hide () {
         const element = this.#getElement();
-        if (element.hasClass('d-none')) {
+        if (element.hasClass('hide')) {
             return;
         }
 
-        element.removeClass('d-block');
-        element.addClass('d-none');
+        element.removeClass('hide');
+        element.addClass('show');
     }
 
     /**
