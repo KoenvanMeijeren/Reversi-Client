@@ -41,12 +41,31 @@ class FeedbackWidget {
         const element = this.#getElement();
         if (element.length < 1) {
             $('body').append(`<div id='${elementId}' class='message-alert' role='alert'>
-<button type="button" class="button button-danger button-close" aria-label="Close"></button>
+<a href="#" class="button button-danger button-close" aria-label="Close"></a>
 <div class="message-container"><span class="icon"></span><div class="message"></div> </div>
 </div>`);
         }
 
         this.hide();
+
+        $(`#${elementId} > .button-close`).on('click', function () {
+            const alert = $(this).parent('.message-alert');
+
+            if (alert.hasClass('show')) {
+                alert.removeClass('show');
+            }
+
+            if (alert.hasClass('hide')) {
+                alert.removeClass('hide');
+            }
+
+            alert.addClass('hide');
+
+            // Completely removes the element after animation.
+            setTimeout(function () {
+                alert.addClass('d-none');
+            }, 1000);
+        });
     }
 
     /**
