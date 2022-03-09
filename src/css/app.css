@@ -50,10 +50,25 @@ body {
     border: 1px solid transparent;
 }
 
+.message-alert .message-container .icon {
+    background-image: url("../src/icons/actions/info-icon.svg");
+    background-size: 25px 25px;
+    display: inline-block;
+    background-repeat: no-repeat;
+    width: 25px;
+    height: 25px;
+    content: "";
+    margin-right: 10px;
+}
+
 .message-alert-info {
     color: #055160;
     background-color: #cff4fc;
     border-color: #b6effb;
+}
+
+.message-alert-info .message-container .icon {
+    background-image: url("../src/icons/actions/info-icon.svg");
 }
 
 .message-alert-danger {
@@ -62,16 +77,28 @@ body {
     border-color: #f5c2c7;
 }
 
+.message-alert-danger .message-container .icon {
+    background-image: url("../src/icons/actions/error-icon.svg");
+}
+
 .message-alert-success {
     color: #0f5132;
     background-color: #d1e7dd;
     border-color: #badbcc;
 }
 
+.message-alert-success .message-container .icon {
+    background-image: url("../src/icons/actions/success-icon.svg");
+}
+
 .message-alert-warning {
     color: #664d03;
     background-color: #fff3cd;
     border-color: #ffecb5;
+}
+
+.message-alert-warning .message-container .icon {
+    background-image: url("../src/icons/actions/warning-icon.svg");
 }
 
 .message-alert .button-close {
@@ -143,5 +170,36 @@ button, .button {
     height: 1em;
     padding: .25em .25em;
     margin: 0;
-    background: #dc3545 url("../src/icons/actions/close.svg") center/1em auto no-repeat;
+    background: #dc3545 url("../src/icons/actions/close-icon.svg") center/1em auto no-repeat;
+}
+
+@keyframes shiver {
+    2%, 18% {
+        transform: translate3d(-5px, 0, 0);
+    }
+
+    4%, 16% {
+        transform: translate3d(5px, 0, 0);
+    }
+
+    6%, 10%, 14% {
+        transform: translate3d(-5px, 0, 0);
+    }
+
+    8%, 12% {
+        transform: translate3d(5px, 0, 0);
+    }
+
+    18.1% {
+        transform: translate3d(0px, 0, 0);
+    }
+}
+
+.button-accept {
+    transform: translate3d(0, 0, 0);
+    -webkit-animation-name: shiver;
+    -webkit-animation-duration: 2s;
+    -webkit-animation-iteration-count: infinite;
+    -webkit-animation-timing-function: linear;
+    -webkit-animation-delay: 2s;
 }
