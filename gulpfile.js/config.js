@@ -8,9 +8,7 @@ module.exports = {
       'src/javascript/*.js'
     ],
     css: [
-      'node_modules/bootstrap/dist/css/bootstrap.min.css',
-      'src/css/**/*.css',
-      'src/css/*.css'
+      'src/css/app.scss'
     ]
   },
   fileOrder: {
@@ -28,9 +26,7 @@ module.exports = {
       'src/javascript/app.js'
     ],
     css: [
-      'node_modules/bootstrap/dist/css/bootstrap.min.css',
-      'src/css/**/*.css',
-      'src/css/*.css'
+        'src/css/app.scss'
     ]
   }
 }

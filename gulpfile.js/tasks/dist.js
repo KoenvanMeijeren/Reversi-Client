@@ -1,9 +1,45 @@
-const { src, dest } = require('gulp')
-const order = require('gulp-order')
-const concat = require('gulp-concat')
-const babel = require('gulp-babel')
-const minifyJs = require('gulp-uglify')
-const cleanCSS = require('gulp-clean-css')
+// General
+const { src, dest } = require('gulp');
+const del = require('del');
+const order = require('gulp-order');
+const concat = require('gulp-concat');
+const babel = require('gulp-babel');
+const rename = require('gulp-rename');
+const header = require('gulp-header');
+const packageJson = require('../../package.json');
+
+// Js
+const uglify = require('gulp-terser');
+const optimizeJs = require('gulp-optimize-js');
+const stripJs = require('gulp-strip-comments');
+
+// Styles
+const sass = require('gulp-sass')(require('sass'));
+const postcss = require('gulp-postcss');
+const prefix = require('autoprefixer');
+const minify = require('cssnano');
+const stripCss = require('gulp-strip-css-comments');
+
+// Template settings
+const banner = {
+    main:
+        '/*!' +
+        ' <%= package.name %> v<%= package.version %>' +
+        ' | (c) ' + new Date().getFullYear() + ' <%= package.author.name %>' +
+        ' | <%= package.license %> License' +
+        ' | <%= package.repository.url %>' +
+        ' */\n'
+};
+
+// Remove pre-existing content from output folders
+const cleanDist = function (backendPath) {
+    return function () {
+        return del([
+            'dist',
+            `${backendPath}/dist`
+        ]);
+    };
+};
 
 /**
  * Creates the distributed files.
@@ -19,17 +55,23 @@ const cleanCSS = require('gulp-clean-css')
  *   The pipeline.
  */
 const distJavascript = function (backendPath, javascriptFiles, javascriptFilesOrder) {
-  return function () {
-    return src(javascriptFiles)
-      .pipe(order(javascriptFilesOrder, { base: './' }))
-      .pipe(concat('app.min.js'))
-      .pipe(babel({
-        presets: ['@babel/preset-env']
-      }))
-      .pipe(minifyJs())
-      .pipe(dest('dist'))
-      .pipe(dest(`${backendPath}/dist`))
-  }
+    return function () {
+        return src(javascriptFiles)
+            .pipe(order(javascriptFilesOrder, { base: './' }))
+            .pipe(concat('app.js'))
+            .pipe(babel({
+                presets: ['@babel/preset-env']
+            }))
+            .pipe(optimizeJs())
+            .pipe(stripJs())
+            .pipe(header(banner.main, { package: packageJson }))
+            .pipe(dest('dist'))
+            .pipe(dest(`${backendPath}/dist`))
+            .pipe(uglify())
+            .pipe(rename({ suffix: '.min' }))
+            .pipe(dest('dist'))
+            .pipe(dest(`${backendPath}/dist`))
+    }
 }
 
 /**
@@ -39,22 +81,36 @@ const distJavascript = function (backendPath, javascriptFiles, javascriptFilesOr
  *   The path to the backend directory.
  * @param {string[]} cssFiles
  *   The css files.
- * @param {string[]} cssFilesOrder
- *   The order of the css files.
  *
  * @return {function(): *}
  *   The pipeline.
  */
-const distCss = function (backendPath, cssFiles, cssFilesOrder) {
-  return function () {
-    return src(cssFiles)
-      .pipe(order(cssFilesOrder, { base: './' }))
-      .pipe(concat('app.min.css'))
-      .pipe(cleanCSS())
-      .pipe(dest('dist'))
-      .pipe(dest(`${backendPath}/dist`))
-  }
+const distCss = function (backendPath, cssFiles) {
+    return function () {
+        return src(cssFiles)
+            .pipe(sass({
+                outputStyle: 'expanded',
+                sourceComments: false
+            }))
+            .pipe(postcss([
+                prefix({
+                    cascade: true,
+                    remove: true
+                }),
+                minify()
+            ]))
+            .pipe(stripCss({
+                preserve: false
+            }))
+            .pipe(header(banner.main, { package: packageJson }))
+            .pipe(dest('dist'))
+            .pipe(dest(`${backendPath}/dist`))
+            .pipe(rename({ suffix: '.min' }))
+            .pipe(dest('dist'))
+            .pipe(dest(`${backendPath}/dist`));
+    }
 }
 
-exports.distJavascript = distJavascript
+exports.distClean = cleanDist;
+exports.distJavascript = distJavascript;
 exports.distCss = distCss
