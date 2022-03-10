@@ -11,12 +11,14 @@ const packageJson = require('../../package.json');
 // Js
 const uglify = require('gulp-terser');
 const optimizeJs = require('gulp-optimize-js');
+const stripJs = require('gulp-strip-comments');
 
 // Styles
 const sass = require('gulp-sass')(require('sass'));
 const postcss = require('gulp-postcss');
 const prefix = require('autoprefixer');
 const minify = require('cssnano');
+const stripCss = require('gulp-strip-css-comments');
 
 // Template settings
 const banner = {
@@ -60,8 +62,9 @@ const distJavascript = function (backendPath, javascriptFiles, javascriptFilesOr
             .pipe(babel({
                 presets: ['@babel/preset-env']
             }))
-            .pipe(header(banner.main, { package: packageJson }))
             .pipe(optimizeJs())
+            .pipe(stripJs())
+            .pipe(header(banner.main, { package: packageJson }))
             .pipe(dest('dist'))
             .pipe(dest(`${backendPath}/dist`))
             .pipe(uglify())
@@ -87,25 +90,22 @@ const distCss = function (backendPath, cssFiles) {
         return src(cssFiles)
             .pipe(sass({
                 outputStyle: 'expanded',
-                sourceComments: true
+                sourceComments: false
             }))
             .pipe(postcss([
                 prefix({
                     cascade: true,
                     remove: true
-                })
+                }),
+                minify()
             ]))
+            .pipe(stripCss({
+                preserve: false
+            }))
             .pipe(header(banner.main, { package: packageJson }))
             .pipe(dest('dist'))
             .pipe(dest(`${backendPath}/dist`))
             .pipe(rename({ suffix: '.min' }))
-            .pipe(postcss([
-                minify({
-                    discardComments: {
-                        removeAll: true
-                    }
-                })
-            ]))
             .pipe(dest('dist'))
             .pipe(dest(`${backendPath}/dist`));
     }
