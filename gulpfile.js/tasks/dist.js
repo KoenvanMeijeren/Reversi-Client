@@ -1,11 +1,12 @@
 // General
 const { src, dest } = require('gulp');
-
 const del = require('del');
 const order = require('gulp-order');
 const concat = require('gulp-concat');
 const babel = require('gulp-babel');
 const rename = require('gulp-rename');
+const header = require('gulp-header');
+const packageJson = require('../../package.json');
 
 // Js
 const uglify = require('gulp-terser');
@@ -16,6 +17,17 @@ const sass = require('gulp-sass')(require('sass'));
 const postcss = require('gulp-postcss');
 const prefix = require('autoprefixer');
 const minify = require('cssnano');
+
+// Template settings
+const banner = {
+    main:
+        '/*!' +
+        ' <%= package.name %> v<%= package.version %>' +
+        ' | (c) ' + new Date().getFullYear() + ' <%= package.author.name %>' +
+        ' | <%= package.license %> License' +
+        ' | <%= package.repository.url %>' +
+        ' */\n'
+};
 
 // Remove pre-existing content from output folders
 const cleanDist = function (backendPath) {
@@ -48,6 +60,7 @@ const distJavascript = function (backendPath, javascriptFiles, javascriptFilesOr
             .pipe(babel({
                 presets: ['@babel/preset-env']
             }))
+            .pipe(header(banner.main, { package: packageJson }))
             .pipe(optimizeJs())
             .pipe(dest('dist'))
             .pipe(dest(`${backendPath}/dist`))
@@ -82,6 +95,7 @@ const distCss = function (backendPath, cssFiles) {
                     remove: true
                 })
             ]))
+            .pipe(header(banner.main, { package: packageJson }))
             .pipe(dest('dist'))
             .pipe(dest(`${backendPath}/dist`))
             .pipe(rename({ suffix: '.min' }))
