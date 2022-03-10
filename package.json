@@ -9,7 +9,7 @@
   },
   "scripts": {
     "build": "gulp clean && gulp js && gulp css",
-    "code-standards": "./node_modules/.bin/eslint"
+    "code-standards": "npx eslint"
   },
   "repository": {
     "type": "git",
