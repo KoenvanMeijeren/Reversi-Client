@@ -8,10 +8,8 @@ const babel = require('gulp-babel');
 const rename = require('gulp-rename');
 
 // Js
-const jshint = require('gulp-jshint');
-const stylish = require('jshint-stylish');
 const uglify = require('gulp-terser');
-const optimizejs = require('gulp-optimize-js');
+const optimizeJs = require('gulp-optimize-js');
 
 // Styles
 const sass = require('gulp-sass')(require('sass'));
@@ -50,7 +48,7 @@ const distJavascript = function (backendPath, javascriptFiles, javascriptFilesOr
             .pipe(babel({
                 presets: ['@babel/preset-env']
             }))
-            .pipe(optimizejs())
+            .pipe(optimizeJs())
             .pipe(dest('dist'))
             .pipe(dest(`${backendPath}/dist`))
             .pipe(uglify())
