@@ -45,7 +45,7 @@ button, .button {
     height: 1em;
     padding: .25em .25em;
     margin: 0;
-    background: #dc3545 url("../src/icons/actions/close-icon.svg") center/1em auto no-repeat;
+    background: #dc3545 url($icon-path-base + "/actions/close-icon.svg") center/1em auto no-repeat;
   }
 
   &-accept {

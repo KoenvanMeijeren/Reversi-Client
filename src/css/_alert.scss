@@ -16,7 +16,7 @@
 
   @media (min-width: $screen-mobile-width) {
     .message-container .icon {
-      background-image: url("../src/icons/actions/info-icon.svg");
+      background-image: url("../icons/actions/info-icon.svg");
       background-size: 25px 25px;
       display: inline-block;
       background-repeat: no-repeat;
@@ -34,7 +34,7 @@
 
     @media (min-width: $screen-mobile-width) {
       .message-container .icon {
-        background-image: url("../src/icons/actions/info-icon.svg");
+        background-image: url($icon-path-base + "/actions/info-icon.svg");
       }
     }
   }
@@ -46,7 +46,7 @@
 
     @media (min-width: $screen-mobile-width) {
       .message-container .icon {
-        background-image: url("../src/icons/actions/error-icon.svg");
+        background-image: url($icon-path-base + "/actions/error-icon.svg");
       }
     }
   }
@@ -58,7 +58,7 @@
 
     @media (min-width: $screen-mobile-width) {
       .message-container .icon {
-        background-image: url("../src/icons/actions/success-icon.svg");
+        background-image: url($icon-path-base + "/actions/success-icon.svg");
       }
     }
   }
@@ -70,7 +70,7 @@
 
     @media (min-width: $screen-mobile-width) {
       .message-container .icon {
-        background-image: url("../src/icons/actions/warning-icon.svg");
+        background-image: url($icon-path-base + "/actions/warning-icon.svg");
       }
     }
   }
