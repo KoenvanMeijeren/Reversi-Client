@@ -1,3 +1,8 @@
+// Configuration
+const outputDirectory = 'public/';
+const distDirectory = 'dist/';
+const outputPath = `${outputDirectory}/${distDirectory}`;
+
 // General
 const { src, dest } = require('gulp');
 const del = require('del');
@@ -19,6 +24,7 @@ const postcss = require('gulp-postcss');
 const prefix = require('autoprefixer');
 const minify = require('cssnano');
 const stripCss = require('gulp-strip-css-comments');
+const browserSync = require('browser-sync');
 
 // Template settings
 const banner = {
@@ -32,11 +38,11 @@ const banner = {
 };
 
 // Remove pre-existing content from output folders
-const cleanDist = function (backendPath) {
+const clean = function (backendPath) {
     return function () {
         return del([
-            'dist',
-            `${backendPath}/dist`
+            outputPath,
+            `${backendPath}/${outputPath}`
         ]);
     };
 };
@@ -54,7 +60,7 @@ const cleanDist = function (backendPath) {
  * @return {function(): *}
  *   The pipeline.
  */
-const distJavascript = function (backendPath, javascriptFiles, javascriptFilesOrder) {
+const javascript = function (backendPath, javascriptFiles, javascriptFilesOrder) {
     return function () {
         return src(javascriptFiles)
             .pipe(order(javascriptFilesOrder, { base: './' }))
@@ -65,12 +71,13 @@ const distJavascript = function (backendPath, javascriptFiles, javascriptFilesOr
             .pipe(optimizeJs())
             .pipe(stripJs())
             .pipe(header(banner.main, { package: packageJson }))
-            .pipe(dest('dist'))
-            .pipe(dest(`${backendPath}/dist`))
+            .pipe(dest(outputPath))
+            .pipe(dest(`${backendPath}/${outputPath}`))
             .pipe(uglify())
             .pipe(rename({ suffix: '.min' }))
-            .pipe(dest('dist'))
-            .pipe(dest(`${backendPath}/dist`))
+            .pipe(dest(outputPath))
+            .pipe(dest(`${backendPath}/${outputPath}`))
+            .pipe(browserSync.stream());
     }
 }
 
@@ -85,7 +92,7 @@ const distJavascript = function (backendPath, javascriptFiles, javascriptFilesOr
  * @return {function(): *}
  *   The pipeline.
  */
-const distCss = function (backendPath, cssFiles) {
+const css = function (backendPath, cssFiles) {
     return function () {
         return src(cssFiles)
             .pipe(sass({
@@ -103,14 +110,15 @@ const distCss = function (backendPath, cssFiles) {
                 preserve: false
             }))
             .pipe(header(banner.main, { package: packageJson }))
-            .pipe(dest('dist'))
-            .pipe(dest(`${backendPath}/dist`))
+            .pipe(dest(outputPath))
+            .pipe(dest(`${backendPath}/${outputPath}`))
             .pipe(rename({ suffix: '.min' }))
-            .pipe(dest('dist'))
-            .pipe(dest(`${backendPath}/dist`));
-    }
+            .pipe(dest(outputPath))
+            .pipe(dest(`${backendPath}/${outputPath}`))
+            .pipe(browserSync.stream());
+    };
 }
 
-exports.distClean = cleanDist;
-exports.distJavascript = distJavascript;
-exports.distCss = distCss
+exports.clean = clean;
+exports.javascript = javascript;
+exports.css = css;
