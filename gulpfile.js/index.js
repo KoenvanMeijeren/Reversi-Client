@@ -14,6 +14,6 @@ exports.server = gulp.task('server', function () {
     });
 
     gulp.watch('./src/css/**/*.scss').on('change', exports.css);
-    gulp.watch('./src/css/**/*.js').on('change', exports.js);
+    gulp.watch('./src/javascript/**/*.js').on('change', exports.js);
     gulp.watch('./public/**/*.html').on('change', browserSync.reload);
 });
