@@ -8,7 +8,7 @@
     "test": "tests"
   },
   "scripts": {
-    "build": "gulp clean && gulp js && gulp css",
+    "build": "gulp clean && gulp js && gulp css && gulp html",
     "code-standards": "npx eslint"
   },
   "repository": {

@@ -26,6 +26,9 @@ const minify = require('cssnano');
 const stripCss = require('gulp-strip-css-comments');
 const browserSync = require('browser-sync');
 
+// HTML
+const htmlmin = require('gulp-htmlmin');
+
 // Template settings
 const banner = {
     main:
@@ -125,6 +128,36 @@ const css = function (backendPath, cssFiles) {
     };
 }
 
+/**
+ * Creates the distributed files.
+ *
+ * @param {string} backendPath
+ *   The path to the backend directory.
+ *
+ * @return {function(): *}
+ *   The pipeline.
+ */
+const html = function (backendPath) {
+    return function () {
+        return src(['./public/index.html'])
+            .pipe(htmlmin({
+                collapseWhitespace: true,
+                minifyJS: true,
+                minifyCSS: true,
+                removeComments: true
+            }))
+            .pipe(rename(function (path) {
+                path.dirname += './public/';
+                path.basename = 'index';
+                path.extname = '.html';
+            }))
+            .pipe(dest('./public'))
+            .pipe(dest(backendPath))
+            .pipe(browserSync.stream());
+    };
+};
+
 exports.clean = clean;
 exports.javascript = javascript;
 exports.css = css;
+exports.html = html;
