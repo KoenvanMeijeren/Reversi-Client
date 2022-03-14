@@ -73,8 +73,12 @@ const javascript = function (backendPath, javascriptFiles, javascriptFilesOrder)
             .pipe(header(banner.main, { package: packageJson }))
             .pipe(dest(outputPath))
             .pipe(dest(`${backendPath}/${outputPath}`))
-            .pipe(uglify())
-            .pipe(rename({ suffix: '.min' }))
+            .pipe(uglify({
+                compress: true
+            }))
+            .pipe(rename({
+                suffix: '.min'
+            }))
             .pipe(dest(outputPath))
             .pipe(dest(`${backendPath}/${outputPath}`))
             .pipe(browserSync.stream());
@@ -112,7 +116,9 @@ const css = function (backendPath, cssFiles) {
             .pipe(header(banner.main, { package: packageJson }))
             .pipe(dest(outputPath))
             .pipe(dest(`${backendPath}/${outputPath}`))
-            .pipe(rename({ suffix: '.min' }))
+            .pipe(rename({
+                suffix: '.min'
+            }))
             .pipe(dest(outputPath))
             .pipe(dest(`${backendPath}/${outputPath}`))
             .pipe(browserSync.stream());
