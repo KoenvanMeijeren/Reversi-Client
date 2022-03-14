@@ -26,6 +26,9 @@ const minify = require('cssnano');
 const stripCss = require('gulp-strip-css-comments');
 const browserSync = require('browser-sync');
 
+// HTML
+const htmlmin = require('gulp-htmlmin');
+
 // Template settings
 const banner = {
     main:
@@ -73,8 +76,12 @@ const javascript = function (backendPath, javascriptFiles, javascriptFilesOrder)
             .pipe(header(banner.main, { package: packageJson }))
             .pipe(dest(outputPath))
             .pipe(dest(`${backendPath}/${outputPath}`))
-            .pipe(uglify())
-            .pipe(rename({ suffix: '.min' }))
+            .pipe(uglify({
+                compress: true
+            }))
+            .pipe(rename({
+                suffix: '.min'
+            }))
             .pipe(dest(outputPath))
             .pipe(dest(`${backendPath}/${outputPath}`))
             .pipe(browserSync.stream());
@@ -103,8 +110,7 @@ const css = function (backendPath, cssFiles) {
                 prefix({
                     cascade: true,
                     remove: true
-                }),
-                minify()
+                })
             ]))
             .pipe(stripCss({
                 preserve: false
@@ -112,13 +118,48 @@ const css = function (backendPath, cssFiles) {
             .pipe(header(banner.main, { package: packageJson }))
             .pipe(dest(outputPath))
             .pipe(dest(`${backendPath}/${outputPath}`))
-            .pipe(rename({ suffix: '.min' }))
+            .pipe(postcss([
+                minify()
+            ]))
+            .pipe(rename({
+                suffix: '.min'
+            }))
             .pipe(dest(outputPath))
             .pipe(dest(`${backendPath}/${outputPath}`))
             .pipe(browserSync.stream());
     };
 }
 
+/**
+ * Creates the distributed files.
+ *
+ * @param {string} backendPath
+ *   The path to the backend directory.
+ *
+ * @return {function(): *}
+ *   The pipeline.
+ */
+const html = function (backendPath) {
+    return function () {
+        return src(['./public/index.html'])
+            .pipe(htmlmin({
+                collapseWhitespace: true,
+                minifyJS: true,
+                minifyCSS: true,
+                removeComments: true
+            }))
+            .pipe(rename(function (path) {
+                path.dirname += './public/';
+                path.basename = 'index';
+                path.extname = '.html';
+            }))
+            .pipe(dest('./public'))
+            .pipe(dest(`${backendPath}/public`))
+            .pipe(browserSync.stream());
+    };
+};
+
 exports.clean = clean;
 exports.javascript = javascript;
 exports.css = css;
+exports.html = html;

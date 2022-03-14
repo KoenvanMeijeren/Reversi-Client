@@ -8,7 +8,7 @@
     "test": "tests"
   },
   "scripts": {
-    "build": "gulp clean && gulp js && gulp css",
+    "build": "gulp clean && gulp js && gulp css && gulp html",
     "code-standards": "npx eslint"
   },
   "repository": {
@@ -23,6 +23,9 @@
   "bugs": {
     "url": "https://github.com/KoenvanMeijeren/Reversi-Client/issues"
   },
+  "browserslist": [
+    "cover 99.5%"
+  ],
   "homepage": "https://github.com/KoenvanMeijeren/Reversi-Client#readme",
   "devDependencies": {
     "@babel/core": "^7.17.5",
@@ -36,6 +39,7 @@
     "gulp-babel": "^8.0.0",
     "gulp-concat": "^2.6.1",
     "gulp-header": "^2.0.9",
+    "gulp-htmlmin": "^5.0.1",
     "gulp-optimize-js": "^1.1.0",
     "gulp-order": "^1.2.0",
     "gulp-postcss": "^9.0.1",
