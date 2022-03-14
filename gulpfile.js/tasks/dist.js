@@ -110,8 +110,7 @@ const css = function (backendPath, cssFiles) {
                 prefix({
                     cascade: true,
                     remove: true
-                }),
-                minify()
+                })
             ]))
             .pipe(stripCss({
                 preserve: false
@@ -119,6 +118,9 @@ const css = function (backendPath, cssFiles) {
             .pipe(header(banner.main, { package: packageJson }))
             .pipe(dest(outputPath))
             .pipe(dest(`${backendPath}/${outputPath}`))
+            .pipe(postcss([
+                minify()
+            ]))
             .pipe(rename({
                 suffix: '.min'
             }))
