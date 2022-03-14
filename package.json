@@ -24,11 +24,7 @@
     "url": "https://github.com/KoenvanMeijeren/Reversi-Client/issues"
   },
   "browserslist": [
-    "last 2 versions",
-    "> 5%",
-    "safari 5",
-    "ie 8",
-    "ie 9"
+    "cover 99.5%"
   ],
   "homepage": "https://github.com/KoenvanMeijeren/Reversi-Client#readme",
   "devDependencies": {
