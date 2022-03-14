@@ -154,7 +154,7 @@ const html = function (backendPath) {
                 path.extname = '.html';
             }))
             .pipe(dest('./public'))
-            .pipe(dest(backendPath))
+            .pipe(dest(`${backendPath}/public`))
             .pipe(browserSync.stream());
     };
 };
