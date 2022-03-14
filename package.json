@@ -23,6 +23,13 @@
   "bugs": {
     "url": "https://github.com/KoenvanMeijeren/Reversi-Client/issues"
   },
+  "browserslist": [
+    "last 2 versions",
+    "> 5%",
+    "safari 5",
+    "ie 8",
+    "ie 9"
+  ],
   "homepage": "https://github.com/KoenvanMeijeren/Reversi-Client#readme",
   "devDependencies": {
     "@babel/core": "^7.17.5",
@@ -36,6 +43,7 @@
     "gulp-babel": "^8.0.0",
     "gulp-concat": "^2.6.1",
     "gulp-header": "^2.0.9",
+    "gulp-htmlmin": "^5.0.1",
     "gulp-optimize-js": "^1.1.0",
     "gulp-order": "^1.2.0",
     "gulp-postcss": "^9.0.1",
