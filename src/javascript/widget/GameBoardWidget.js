@@ -1,5 +1,5 @@
 /**
- * Provides widget for giving feedback.
+ * Provides widget for Reversi game board.
  */
 class GameBoardWidget {
 
