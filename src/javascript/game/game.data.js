@@ -63,6 +63,16 @@ Game.Data = (function () {
     }
 
     /**
+     * Gets the token of the player.
+     *
+     * @return {string}
+     *   The player token.
+     */
+    function getPlayerToken () {
+        return this.getContainer().data('game-player');
+    }
+
+    /**
      * Gets the state of the game.
      *
      * @param {string} token
@@ -154,10 +164,11 @@ Game.Data = (function () {
     }
 
     return {
-        init: init,
-        getContainer: getContainer,
-        getGamePlayContainer: getGamePlayContainer,
-        getToken: getToken,
-        get: get,
+        init,
+        getContainer,
+        getGamePlayContainer,
+        getToken,
+        getPlayerToken,
+        get,
     };
 })();

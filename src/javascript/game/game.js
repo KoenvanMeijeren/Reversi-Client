@@ -19,10 +19,21 @@ const Game = (function (url) {
     const init = function (callback) {
         callback();
 
+        const gameToken = Game.Data.getToken();
+        const playerToken = Game.Data.getPlayerToken();
+
         // Refreshes the game state every 2 seconds.
         render();
         setInterval(function () {
-            render();
+            Game.Data.get(gameToken).then(game => {
+                stateMap.game = game;
+            });
+
+            // @todo: Test if this works while playing for real.
+            const game = get();
+            if (game?.CurrentPlayer.Token !== null && game?.CurrentPlayer.Token !== playerToken) {
+                render();
+            }
 
             console.log('Refreshed game state');
         }, config.refreshRate);
@@ -36,10 +47,7 @@ const Game = (function (url) {
         Game.Data.get(gameToken).then(game => {
             stateMap.game = game;
 
-            const gamePlay = Game.Data.getGamePlayContainer();
-            gamePlay.html('');
-
-            gamePlay.append(game.ToString);
+            new GameBoardWidget(Game.Data.getGamePlayContainer(), game).render();
         });
     };
 
