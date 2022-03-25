@@ -31,24 +31,47 @@ Game.Data = (function () {
     }
 
     /**
+     * Gets the container of the game.
+     *
+     * @return {jQuery}
+     *   The game container.
+     */
+    function getContainer () {
+        return $('.game');
+    }
+
+    /**
+     * Gets the token of the game.
+     *
+     * @return {string}
+     *   The game token.
+     */
+    function getToken () {
+        return this.getContainer().data('game-token');
+    }
+
+    /**
      * Gets the state of the game.
+     *
+     * @param {string} token
+     *   The token of the game.
      *
      * @returns {Promise}
      *   The game.
      */
-    function get () {
+    function get (token) {
         if (Env.isDevelopment()) {
             return getMockData('token/');
         }
 
-        return getByToken('fNtIKMuvJkSDBvuB8lbfCwii', '')
+        return getByToken(token, '')
             .then((data) => {
                 return new GameModel(
                     data.id,
                     data.description,
                     data.token,
-                    new PlayerModel(data.playerOne.token, data.playerOne.color),
-                    new PlayerModel(data.playerTwo.token, data.playerTwo.color),
+                    new PlayerOne(data.playerOne.token),
+                    new PlayerTwo(data.playerTwo.token),
                     new PlayerModel(data.currentPlayer.token, data.currentPlayer.color),
                     data.board,
                     data.status
@@ -120,6 +143,8 @@ Game.Data = (function () {
 
     return {
         init: init,
-        get: get
+        getContainer: getContainer,
+        getToken: getToken,
+        get: get,
     };
 })();

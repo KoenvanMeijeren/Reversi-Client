@@ -137,16 +137,13 @@ class GameModel {
     }
 
     /**
-     * Updates the status of the game.
+     * Renders the game to a string.
      *
-     * @param {Array<Array<Color>>} board
-     * @param {PlayerModel} currentPlayer
-     * @param {Status} status
+     * @return {string}
+     *   The game as string.
      */
-    UpdateStatus (board, currentPlayer, status) {
-        this.#Board = this.BoardToArray(board);
-        this.#CurrentPlayer = currentPlayer;
-        this.#Status = status;
+    ToString () {
+        return this.#Status + ' - ' + this.#Token;
     }
 
     /**
@@ -183,6 +180,21 @@ class GameModel {
                     row[columnIndex] = Color.Black;
                     break;
                 default:
+                    if (column.includes('0')) {
+                        row[columnIndex] = Color.None;
+                        break;
+                    }
+
+                    if (column.includes('1')) {
+                        row[columnIndex] = Color.White;
+                        break;
+                    }
+
+                    if (column.includes('2')) {
+                        row[columnIndex] = Color.Black;
+                        break;
+                    }
+
                     throw new Error('Invalid value given! Expected one of the color values, but received: ' + column);
                 }
             });
