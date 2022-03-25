@@ -45,8 +45,10 @@ const clean = function (backendPath) {
     return function () {
         return del([
             outputPath,
-            `${backendPath}/${outputPath}`
-        ]);
+            `${backendPath}/${distDirectory}`
+        ], {
+            force: true
+        });
     };
 };
 
@@ -75,7 +77,7 @@ const javascript = function (backendPath, javascriptFiles, javascriptFilesOrder)
             .pipe(stripJs())
             .pipe(header(banner.main, { package: packageJson }))
             .pipe(dest(outputPath))
-            .pipe(dest(`${backendPath}/${outputPath}`))
+            .pipe(dest(`${backendPath}/${distDirectory}`))
             .pipe(uglify({
                 compress: true
             }))
@@ -83,7 +85,7 @@ const javascript = function (backendPath, javascriptFiles, javascriptFilesOrder)
                 suffix: '.min'
             }))
             .pipe(dest(outputPath))
-            .pipe(dest(`${backendPath}/${outputPath}`))
+            .pipe(dest(`${backendPath}/${distDirectory}`))
             .pipe(browserSync.stream());
     }
 }
@@ -117,7 +119,7 @@ const css = function (backendPath, cssFiles) {
             }))
             .pipe(header(banner.main, { package: packageJson }))
             .pipe(dest(outputPath))
-            .pipe(dest(`${backendPath}/${outputPath}`))
+            .pipe(dest(`${backendPath}/${distDirectory}`))
             .pipe(postcss([
                 minify()
             ]))
@@ -125,10 +127,32 @@ const css = function (backendPath, cssFiles) {
                 suffix: '.min'
             }))
             .pipe(dest(outputPath))
-            .pipe(dest(`${backendPath}/${outputPath}`))
+            .pipe(dest(`${backendPath}/${distDirectory}`))
             .pipe(browserSync.stream());
     };
 }
+
+/**
+ * Creates the distributed files.
+ *
+ * @param {string} backendPath
+ *   The path to the backend directory.
+ * @param {string[]} copyFiles
+ *   The copy files.
+ * @param {string} outputDirectory
+ *   The output directory to copy the files to.
+ *
+ * @return {function(): *}
+ *   The pipeline.
+ */
+const copy = function (backendPath, copyFiles, outputDirectory) {
+    return function () {
+        return src(copyFiles)
+            .pipe(dest(`${outputPath}/${outputDirectory}`))
+            .pipe(dest(`${backendPath}/${distDirectory}/${outputDirectory}`))
+            .pipe(browserSync.stream());
+    };
+};
 
 /**
  * Creates the distributed files.
@@ -162,4 +186,5 @@ const html = function (backendPath) {
 exports.clean = clean;
 exports.javascript = javascript;
 exports.css = css;
+exports.copy = copy;
 exports.html = html;

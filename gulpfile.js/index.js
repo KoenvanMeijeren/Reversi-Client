@@ -5,6 +5,7 @@ const browserSync = require('browser-sync');
 exports.js = require('./tasks/dist').javascript(config.localServerProjectPath, config.files.js, config.fileOrder.js);
 exports.css = require('./tasks/dist').css(config.localServerProjectPath, config.files.css);
 exports.clean = require('./tasks/dist').clean(config.localServerProjectPath);
+exports.icons = require('./tasks/dist').copy(config.localServerProjectPath, config.files.icons, 'icons');
 exports.html = require('./tasks/dist').html(config.localServerProjectPath);
 
 exports.server = gulp.task('server', function () {

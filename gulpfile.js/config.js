@@ -1,16 +1,19 @@
 module.exports = {
-  localServerProjectPath: './wwwroot',
-  files: {
-    js: [
-      'node_modules/jquery/dist/jquery.min.js',
-      'node_modules/bootstrap/dist/js/bootstrap.min.js',
-      'src/javascript/**/*.js',
-      'src/javascript/*.js'
-    ],
-    css: [
-      'src/css/app.scss'
-    ]
-  },
+    localServerProjectPath: 'E:\\Development\\C#\\WebDev\\ReversiMvc\\ReversiMvc\\wwwroot',
+    files: {
+        js: [
+            'node_modules/jquery/dist/jquery.min.js',
+            'node_modules/bootstrap/dist/js/bootstrap.min.js',
+            'src/javascript/**/*.js',
+            'src/javascript/*.js'
+        ],
+        css: [
+            'src/css/app.scss'
+        ],
+        icons: [
+            'src/icons/**/*'
+        ]
+    },
   fileOrder: {
     js: [
       'node_modules/jquery/dist/jquery.min.js',

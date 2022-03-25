@@ -5,7 +5,7 @@ Game.Data = (function () {
      * @type {{baseUrl: string, mock: [{subUrl: string, data: GameModel}]}}
      */
     const config = {
-        baseUrl: 'https://localhost:7042/api/Game',
+        baseUrl: Game.getApiUrl(),
         mock: [
             {
                 subUrl: 'token/',
@@ -15,7 +15,7 @@ Game.Data = (function () {
                     'fNtIKMuvJkSDBvuB8lbfCwii',
                     new PlayerOne('abcdef'),
                     new PlayerTwo('qwerty'),
-                    new PlayerOne('abcdef'),
+                    new PlayerUndefined('abcdef'),
                     '[[0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0],[0,0,0,1,2,0,0,0],[0,0,0,2,1,0,0,0],[0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0]]',
                     Status.Created
                 )
@@ -24,31 +24,66 @@ Game.Data = (function () {
     };
 
     /**
-     * Initializes the game object.
+     * Initializes the game data.
      */
     function init () {
 
     }
 
     /**
+     * Gets the container of the game.
+     *
+     * @return {jQuery}
+     *   The game container.
+     */
+    function getContainer () {
+        return $('.game');
+    }
+
+    /**
+     * Gets the game play container.
+     *
+     * @return {jQuery}
+     *   The game play container.
+     */
+    function getGamePlayContainer () {
+        const gameToken = Game.Data.getToken();
+
+        return Game.Data.getContainer().find(`#game-play-${gameToken}`);
+    }
+
+    /**
+     * Gets the token of the game.
+     *
+     * @return {string}
+     *   The game token.
+     */
+    function getToken () {
+        return this.getContainer().data('game-token');
+    }
+
+    /**
      * Gets the state of the game.
      *
-     * @returns {Promise}
+     * @param {string} token
+     *   The token of the game.
+     *
+     * @returns {Promise<GameModel>}
      *   The game.
      */
-    function get () {
+    function get (token) {
         if (Env.isDevelopment()) {
             return getMockData('token/');
         }
 
-        return getByToken('fNtIKMuvJkSDBvuB8lbfCwii', '')
+        return getByToken(token, '')
             .then((data) => {
                 return new GameModel(
                     data.id,
                     data.description,
                     data.token,
-                    new PlayerModel(data.playerOne.token, data.playerOne.color),
-                    new PlayerModel(data.playerTwo.token, data.playerTwo.color),
+                    new PlayerOne(data.playerOne.token),
+                    new PlayerTwo(data.playerTwo.token),
                     new PlayerModel(data.currentPlayer.token, data.currentPlayer.color),
                     data.board,
                     data.status
@@ -120,6 +155,9 @@ Game.Data = (function () {
 
     return {
         init: init,
-        get: get
+        getContainer: getContainer,
+        getGamePlayContainer: getGamePlayContainer,
+        getToken: getToken,
+        get: get,
     };
 })();
