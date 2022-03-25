@@ -2,7 +2,7 @@ Game.Reversi = (function () {
     const config = {};
 
     /**
-     * Initializes the game object.
+     * Initializes the game.
      */
     const init = function () {
 

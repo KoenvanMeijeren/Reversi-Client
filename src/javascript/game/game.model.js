@@ -2,7 +2,7 @@ Game.Model = (function () {
     const config = {};
 
     /**
-     * Initializes the game object.
+     * Initializes the game model.
      */
     const init = function () {
 

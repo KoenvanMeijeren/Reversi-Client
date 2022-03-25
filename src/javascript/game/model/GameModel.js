@@ -142,7 +142,7 @@ class GameModel {
      * @return {string}
      *   The game as string.
      */
-    ToString () {
+    get ToString () {
         return this.#Status + ' - ' + this.#Token;
     }
 

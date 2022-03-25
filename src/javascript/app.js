@@ -1,22 +1,13 @@
 $(document).ready(function () {
     Env.init(Environments.production);
-    Game.init(afterGameInit);
+    Game.init(preGameInit);
 
     /**
-     * Runs after initializing the game.
+     * Runs before initializing the game.
      */
-    function afterGameInit () {
+    function preGameInit () {
         Game.Data.init();
         Game.Model.init();
         Game.Reversi.init();
-
-        const gameToken = Game.Data.getToken();
-
-        Game.Data.get(gameToken).then(game => {
-            const gameContainer = Game.Data.getContainer();
-            const gamePlay = gameContainer.find(`#game-play-${gameToken}`);
-
-            gamePlay.append(game.ToString());
-        });
     }
 });
