@@ -125,7 +125,29 @@ const css = function (backendPath, cssFiles) {
                 suffix: '.min'
             }))
             .pipe(dest(outputPath))
-            .pipe(dest(`${backendPath}/${outputPath}`))
+            .pipe(dest(`${backendPath}/${distDirectory}`))
+            .pipe(browserSync.stream());
+    };
+}
+
+/**
+ * Creates the distributed files.
+ *
+ * @param {string} backendPath
+ *   The path to the backend directory.
+ * @param {string[]} copyFiles
+ *   The copy files.
+ * @param {string} outputDirectory
+ *   The output directory to copy the files to.
+ *
+ * @return {function(): *}
+ *   The pipeline.
+ */
+const copy = function (backendPath, copyFiles, outputDirectory) {
+    return function () {
+        return src(copyFiles)
+            .pipe(dest(`${outputPath}/${outputDirectory}`))
+            .pipe(dest(`${backendPath}/${distDirectory}/${outputDirectory}`))
             .pipe(browserSync.stream());
     };
 }
