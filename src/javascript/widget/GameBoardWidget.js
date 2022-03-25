@@ -70,8 +70,4 @@ class GameBoardWidget {
         return table;
     }
 
-    #addRow () {
-
-    }
-
 }
