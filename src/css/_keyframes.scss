@@ -37,3 +37,14 @@
         opacity: 0;
     }
 }
+
+@-webkit-keyframes flipHeadsWithOpacity {
+    from {
+        opacity: 1;
+        transform: rotateY(0);
+    }
+    to {
+        transform: rotateY(1800deg);
+        opacity: 0;
+    }
+}

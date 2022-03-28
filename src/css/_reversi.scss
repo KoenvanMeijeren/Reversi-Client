@@ -69,6 +69,10 @@
                     background: linear-gradient(#aaa, #eee);
                     border-color: #bababa;
                 }
+
+                &-animation {
+                    animation: flipHeadsWithOpacity 100ms ease-out
+                }
             }
 
             &:last-child {
