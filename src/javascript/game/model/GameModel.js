@@ -68,6 +68,13 @@ class GameModel {
     #CurrentPlayer;
 
     /**
+     * The predominant color.
+     *
+     * @type {Color}
+     */
+    #PredominantColor;
+
+    /**
      * The board.
      *
      * @type {Array<Array<Color>>}
@@ -97,17 +104,19 @@ class GameModel {
      * @param {PlayerModel} playerOne
      * @param {PlayerModel} playerTwo
      * @param {PlayerModel} currentPlayer
+     * @param {string} predominantColor
      * @param {string} board
      * @param {string} possibleMoves
      * @param {Status} status
      */
-    constructor (id, description, token, playerOne, playerTwo, currentPlayer, board, possibleMoves, status) {
+    constructor (id, description, token, playerOne, playerTwo, currentPlayer, predominantColor, board, possibleMoves, status) {
         this.#Id = id;
         this.#Description = description;
         this.#Token = token;
         this.#PlayerOne = playerOne;
         this.#PlayerTwo = playerTwo;
         this.#CurrentPlayer = currentPlayer;
+        this.#PredominantColor = GameModel.#stringToColor(predominantColor);
         this.#Board = GameModel.#BoardToArray(board);
         this.#PossibleMoves = GameModel.#PossibleMovesToArray(possibleMoves);
         this.#Status = status;
@@ -137,6 +146,10 @@ class GameModel {
         return this.#CurrentPlayer;
     }
 
+    get PredominantColor () {
+        return this.#PredominantColor;
+    }
+
     get Board () {
         return this.#Board;
     }
@@ -155,8 +168,38 @@ class GameModel {
      * @return {string}
      *   The game as string.
      */
-    get ToString () {
+    ToString () {
         return this.#Status + ' - ' + this.#Token;
+    }
+
+    /**
+     * Determines if the game has ended.
+     *
+     * @return {boolean}
+     *   True if the game has ended.
+     */
+    IsEnded () {
+        return this.IsFinished() || this.IsQuit();
+    }
+
+    /**
+     * Determines if the game has finished.
+     *
+     * @return {boolean}
+     *   True if the game has finished.
+     */
+    IsFinished () {
+        return this.#Status === Status.Finished;
+    }
+
+    /**
+     * Determines if the game has quit.
+     *
+     * @return {boolean}
+     *   True if the game has quit.
+     */
+    IsQuit () {
+        return this.#Status === Status.Quit;
     }
 
     /**
@@ -257,5 +300,26 @@ class GameModel {
         });
 
         return result;
+    }
+
+    /**
+     * Parses a string to the corresponding color value.
+     *
+     * @param {string} string
+     *   The string to be parsed.
+     *
+     * @return {Color}
+     *   The parsed color.
+     */
+    static #stringToColor (string) {
+        if (string === 'White') {
+            return Color.White;
+        }
+
+        if (string === 'Black') {
+            return Color.Black;
+        }
+
+        return Color.None;
     }
 }

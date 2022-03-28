@@ -16,6 +16,7 @@ Game.Data = (function () {
                     new PlayerOne('abcdef'),
                     new PlayerTwo('qwerty'),
                     new PlayerUndefined('abcdef'),
+                    'None',
                     '[[0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0],[0,0,0,1,2,0,0,0],[0,0,0,2,1,0,0,0],[0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0]]',
                     '[[false,false,false,false,false,false,false,false],[false,false,false,false,false,false,false,false],[false,false,false,false,true,false,false,false],[false,false,false,false,false,true,false,false],[false,false,true,false,false,false,false,false],[false,false,false,true,false,false,false,false],[false,false,false,false,false,false,false,false],[false,false,false,false,false,false,false,false]]',
                     Status.Created
@@ -96,6 +97,7 @@ Game.Data = (function () {
                     new PlayerOne(data.playerOne.token),
                     new PlayerTwo(data.playerTwo.token),
                     new PlayerModel(data.currentPlayer.token, data.currentPlayer.color),
+                    data.predominantColor,
                     data.board,
                     data.possibleMoves,
                     data.status
@@ -123,7 +125,7 @@ Game.Data = (function () {
      * @param {number} column
      *   The column.
      *
-     * @return Promise
+     * @return {Promise}
      *   The promise.
      */
     function saveDoMove (token, playerToken, row, column) {

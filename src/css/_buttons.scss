@@ -1,59 +1,59 @@
 button, .button {
-  display: inline-block;
-  font-weight: 400;
-  line-height: 1.5;
-  color: $black;
-  text-align: center;
-  text-decoration: none;
-  vertical-align: middle;
-  cursor: pointer;
-  user-select: none;
-  background-color: transparent;
-  border: 1px solid transparent;
-  padding: .375rem .75rem;
-  font-size: $font-size-default;
-  border-radius: .25rem;
-  transition: color .15s ease-in-out, background-color .15s ease-in-out, border-color .15s ease-in-out, box-shadow .15s ease-in-out;
-  margin: .5rem;
+    display: inline-block;
+    font-weight: 400;
+    line-height: 1.5;
+    color: $black;
+    text-align: center;
+    text-decoration: none;
+    vertical-align: middle;
+    cursor: pointer;
+    user-select: none;
+    background-color: transparent;
+    border: 1px solid transparent;
+    padding: .375rem .75rem;
+    font-size: $font-size-default;
+    border-radius: .25rem;
+    transition: color .15s ease-in-out, background-color .15s ease-in-out, border-color .15s ease-in-out, box-shadow .15s ease-in-out;
+    margin: .5rem;
 
 
-  &-primary {
-    color: $white;
-    background-color: rgba(13, 202, 240);
-    border: 0;
+    &-primary {
+        color: $white;
+        background-color: rgba(13, 202, 240);
+        border: 0;
 
-    &:hover, &:focus, &:active {
-      border-color: rgba(13, 202, 240);
-      box-shadow: 0 0 0 0.25rem rgb(11 181 216);
+        &:hover, &:focus, &:active {
+            border-color: rgba(13, 202, 240);
+            box-shadow: 0 0 0 0.25rem rgb(11 181 216);
+        }
     }
-  }
 
-  &-danger {
-    color: $white;
-    background-color: #dc3545;
-    border: 0;
+    &-danger {
+        color: $white;
+        background-color: #dc3545;
+        border: 0;
 
-    &:hover, &:focus, &:active {
-      border-color: #b02a37;
-      box-shadow: 0 0 0 0.25rem #b02a37;
+        &:hover, &:focus, &:active {
+            border-color: #b02a37;
+            box-shadow: 0 0 0 0.25rem #b02a37;
+        }
     }
-  }
 
-  &-close {
-    box-sizing: content-box;
-    width: 1em;
-    height: 1em;
-    padding: .25em .25em;
-    margin: 0;
-    background: #dc3545 url($icon-path-base + "/actions/close-icon.svg") center/1em auto no-repeat;
-  }
+    &-close {
+        box-sizing: content-box;
+        width: 1em;
+        height: 1em;
+        padding: .25em .25em;
+        margin: 0;
+        background: #dc3545 url($icon-path-base + "/actions/close-icon.svg") center/1em auto no-repeat;
+    }
 
-  &-accept {
-    transform: translate3d(0, 0, 0);
-    animation-name: shiver;
-    animation-duration: 2s;
-    animation-iteration-count: infinite;
-    animation-timing-function: linear;
-    animation-delay: 2s;
-  }
+    &-accept {
+        transform: translate3d(0, 0, 0);
+        animation-name: shiver;
+        animation-duration: 2s;
+        animation-iteration-count: infinite;
+        animation-timing-function: linear;
+        animation-delay: 2s;
+    }
 }

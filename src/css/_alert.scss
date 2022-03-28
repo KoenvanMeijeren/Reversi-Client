@@ -1,99 +1,103 @@
 .message-alert {
-  position: relative;
-  min-height: 75px;
-  margin: 10px;
-  border-radius: 10px;
-  padding: 20px;
-  border: 1px solid transparent;
+    position: absolute;
+    top: 0;
+    right: 0;
+    min-height: 75px;
+    margin: 10px;
+    border-radius: 10px;
+    padding: 20px;
+    border: 1px solid transparent;
+    box-shadow: 0 3px 10px rgb(0 0 0 / 0.2);
+    min-width: 30%;
 
-  .message {
-    margin-top: 35px;
+    .message {
+        margin-top: 35px;
+
+        @media (min-width: $screen-mobile-width) {
+            margin-top: 0;
+        }
+    }
 
     @media (min-width: $screen-mobile-width) {
-      margin-top: 0;
+        .message-container .icon {
+            background-image: url("../icons/actions/info-icon.svg");
+            background-size: 25px 25px;
+            display: inline-block;
+            background-repeat: no-repeat;
+            width: 25px;
+            height: 25px;
+            content: "";
+            margin-right: 10px;
+        }
     }
-  }
 
-  @media (min-width: $screen-mobile-width) {
-    .message-container .icon {
-      background-image: url("../icons/actions/info-icon.svg");
-      background-size: 25px 25px;
-      display: inline-block;
-      background-repeat: no-repeat;
-      width: 25px;
-      height: 25px;
-      content: "";
-      margin-right: 10px;
+    &-info {
+        color: #055160;
+        background-color: #cff4fc;
+        border-color: #b6effb;
+
+        @media (min-width: $screen-mobile-width) {
+            .message-container .icon {
+                background-image: url($icon-path-base + "/actions/info-icon.svg");
+            }
+        }
     }
-  }
 
-  &-info {
-    color: #055160;
-    background-color: #cff4fc;
-    border-color: #b6effb;
+    &-danger {
+        color: #842029;
+        background-color: #f8d7da;
+        border-color: #f5c2c7;
 
-    @media (min-width: $screen-mobile-width) {
-      .message-container .icon {
-        background-image: url($icon-path-base + "/actions/info-icon.svg");
-      }
+        @media (min-width: $screen-mobile-width) {
+            .message-container .icon {
+                background-image: url($icon-path-base + "/actions/error-icon.svg");
+            }
+        }
     }
-  }
 
-  &-danger {
-    color: #842029;
-    background-color: #f8d7da;
-    border-color: #f5c2c7;
+    &-success {
+        color: #0f5132;
+        background-color: #d1e7dd;
+        border-color: #badbcc;
 
-    @media (min-width: $screen-mobile-width) {
-      .message-container .icon {
-        background-image: url($icon-path-base + "/actions/error-icon.svg");
-      }
+        @media (min-width: $screen-mobile-width) {
+            .message-container .icon {
+                background-image: url($icon-path-base + "/actions/success-icon.svg");
+            }
+        }
     }
-  }
 
-  &-success {
-    color: #0f5132;
-    background-color: #d1e7dd;
-    border-color: #badbcc;
+    &-warning {
+        color: #664d03;
+        background-color: #fff3cd;
+        border-color: #ffecb5;
 
-    @media (min-width: $screen-mobile-width) {
-      .message-container .icon {
-        background-image: url($icon-path-base + "/actions/success-icon.svg");
-      }
+        @media (min-width: $screen-mobile-width) {
+            .message-container .icon {
+                background-image: url($icon-path-base + "/actions/warning-icon.svg");
+            }
+        }
     }
-  }
 
-  &-warning {
-    color: #664d03;
-    background-color: #fff3cd;
-    border-color: #ffecb5;
-
-    @media (min-width: $screen-mobile-width) {
-      .message-container .icon {
-        background-image: url($icon-path-base + "/actions/warning-icon.svg");
-      }
+    .button-close {
+        float: right;
     }
-  }
 
-  .button-close {
-    float: right;
-  }
+    .actions {
+        margin-top: 3rem;
+        text-align: right;
+        justify-content: flex-end;
+    }
 
-  .actions {
-    margin-top: 3rem;
-    text-align: right;
-    justify-content: flex-end;
-  }
+    &.show {
+        display: block;
+        animation: fadein 1s linear;
+        opacity: 1;
+    }
 
-  &.show {
-    display: block;
-    animation: fadein 1s linear;
-    opacity: 1;
-  }
-
-  &.hide {
-    display: block;
-    animation: fadeout 1s linear;
-    opacity: 0;
-  }
+    &.hide {
+        display: block;
+        animation: fadeout 1s linear;
+        opacity: 0;
+    }
 }
