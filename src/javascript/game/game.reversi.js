@@ -27,7 +27,7 @@ Game.Reversi = (function () {
             element.addClass('reversi-column-fiche-animation');
 
             Game.Data.saveDoMove(token, playerToken, row, column).then(function () {
-                setInterval(function () {
+                setTimeout(function () {
                     Game.Data.getContainer().trigger('refresh-reversi');
                 }, 100);
             });
