@@ -36,6 +36,8 @@ const Game = (function (url) {
             const initGame = get();
             if (initGame.IsEnded()) {
                 notifyPlayerIfRequested(initGame);
+                localStorage.removeItem('notify-player');
+
                 return;
             }
 
@@ -44,6 +46,8 @@ const Game = (function (url) {
                 let game = get();
                 if (game.IsEnded()) {
                     if (localStorage.getItem('reload-game') === 'true') {
+                        localStorage.removeItem('reload-game');
+
                         location.reload();
                     }
                 }
