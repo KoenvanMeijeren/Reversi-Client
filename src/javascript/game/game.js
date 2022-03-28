@@ -21,6 +21,9 @@ const Game = (function (url) {
 
         const gameToken = Game.Data.getToken();
         const playerToken = Game.Data.getPlayerToken();
+        if (gameToken == null || playerToken == null) {
+            throw new Error('Cannot render the game');
+        }
 
         // Refreshes the game state every 2 seconds.
         render();
