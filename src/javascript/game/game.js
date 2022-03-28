@@ -120,8 +120,22 @@ const Game = (function (url) {
      */
     const notifyPlayerIfRequested = function (game) {
         const notifyPlayer = localStorage.getItem('notify-player');
+        const playerToken = Game.Data.getPlayerToken();
         if (notifyPlayer !== 'true') {
             return;
+        }
+
+        let winnerText = 'Het is een gelijkspel geworden!';
+        if (game.PredominantColor === Color.White) {
+            winnerText = 'De tegenstander heeft gewonnnen!';
+            if (playerToken === game.PlayerOne.Token) {
+                winnerText = 'Jij hebt gewonnen!';
+            }
+        } else if (game.PredominantColor === Color.Black) {
+            winnerText = 'De tegenstander heeft gewonnnen!';
+            if (playerToken === game.PlayerOne.Token) {
+                winnerText = 'Jij hebt gewonnen!';
+            }
         }
 
         if (game.Status === Status.Pending) {
@@ -129,9 +143,9 @@ const Game = (function (url) {
         } else if (game.Status === Status.Playing) {
             new FeedbackWidget(game.Status.toString()).show('Reversi potje is gestart!');
         } else if (game.Status === Status.Quit) {
-            new FeedbackWidget(game.Status.toString()).show('Reversi potje is gestopt!');
+            new FeedbackWidget(game.Status.toString()).show('Reversi potje is gestopt. ' + winnerText);
         } else if (game.Status === Status.Finished) {
-            new FeedbackWidget(game.Status.toString()).show('Reversi potje is uitgespeeld!');
+            new FeedbackWidget(game.Status.toString()).show('Reversi potje is uitgespeeld. ' + winnerText);
         }
     };
 
