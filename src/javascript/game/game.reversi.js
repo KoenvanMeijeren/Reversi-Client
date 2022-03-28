@@ -24,9 +24,12 @@ Game.Reversi = (function () {
 
             element.attr('data-color', color);
             element.attr('data-selectable', 'false');
+            element.addClass('reversi-column-fiche-animation');
 
             Game.Data.saveDoMove(token, playerToken, row, column).then(function () {
-                Game.Data.getContainer().trigger('refresh-reversi');
+                setInterval(function () {
+                    Game.Data.getContainer().trigger('refresh-reversi');
+                }, 100);
             });
         });
     };
