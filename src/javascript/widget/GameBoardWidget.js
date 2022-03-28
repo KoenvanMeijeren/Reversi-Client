@@ -18,16 +18,26 @@ class GameBoardWidget {
     #game;
 
     /**
+     * The token of the logged in player.
+     *
+     * @type {string}
+     */
+    #loggedInPlayerToken;
+
+    /**
      * Constructs the game board widget.
      *
      * @param {jQuery} parent
      *   The parent of the widget.
      * @param {GameModel} game
      *   The game.
+     * @param {string} loggedInPlayerToken
+     *   The token of the logged in player.
      */
-    constructor (parent, game) {
+    constructor (parent, game, loggedInPlayerToken) {
         this.#parent = parent;
         this.#game = game;
+        this.#loggedInPlayerToken = loggedInPlayerToken;
     }
 
     /**
@@ -46,6 +56,8 @@ class GameBoardWidget {
      */
     #createTable () {
         const game = this.#game;
+        const isCurrentPlayer = this.#isCurrentPlayer();
+
         const table = document.createElement('table');
         table.setAttribute('class', 'reversi-table');
 
@@ -62,7 +74,9 @@ class GameBoardWidget {
 
                 const fiche = document.createElement('div');
                 fiche.setAttribute('class', 'reversi-column-fiche');
-                fiche.setAttribute('data-selectable', possibleMove ? 'true' : 'false');
+                fiche.setAttribute('data-selectable', possibleMove && isCurrentPlayer ? 'true' : 'false');
+                fiche.setAttribute('data-row', boardRowIndex.toString());
+                fiche.setAttribute('data-column', boardColumnIndex.toString());
                 fiche.setAttribute('data-color', boardColumn.toString());
 
                 column.appendChild(fiche);
@@ -71,6 +85,16 @@ class GameBoardWidget {
         });
 
         return table;
+    }
+
+    /**
+     * Determines who the current player is.
+     *
+     * @return {boolean}
+     *   Whether the player is the current one or not.
+     */
+    #isCurrentPlayer () {
+        return this.#game?.CurrentPlayer.Token !== null && this.#game?.CurrentPlayer.Token === this.#loggedInPlayerToken;
     }
 
 }
