@@ -155,8 +155,38 @@ class GameModel {
      * @return {string}
      *   The game as string.
      */
-    get ToString () {
+    ToString () {
         return this.#Status + ' - ' + this.#Token;
+    }
+
+    /**
+     * Determines if the game has ended.
+     *
+     * @return {boolean}
+     *   True if the game has ended.
+     */
+    IsEnded () {
+        return this.IsFinished() || this.IsQuit();
+    }
+
+    /**
+     * Determines if the game has finished.
+     *
+     * @return {boolean}
+     *   True if the game has finished.
+     */
+    IsFinished () {
+        return this.#Status === Status.Finished;
+    }
+
+    /**
+     * Determines if the game has quit.
+     *
+     * @return {boolean}
+     *   True if the game has quit.
+     */
+    IsQuit () {
+        return this.#Status === Status.Quit;
     }
 
     /**

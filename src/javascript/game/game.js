@@ -33,8 +33,28 @@ const Game = (function (url) {
 
         // Refreshes the game state every 2 seconds.
         setInterval(function () {
+            let game = get();
+            if (game.IsEnded()) {
+                return;
+            }
+
             refreshGameState();
-            const game = get();
+            game = get();
+
+            // Notifies the player of changes, if requested.
+            const notifyPlayer = localStorage.getItem('notify-player');
+            if (notifyPlayer === 'true') {
+                if (game.Status === Status.Pending) {
+                    new FeedbackWidget(game.Status.toString()).show('Tegenstander gevonden!');
+                } else if (game.Status === Status.Playing) {
+                    new FeedbackWidget(game.Status.toString()).show('Reversi potje is gestart!');
+                } else if (game.Status === Status.Quit) {
+                    new FeedbackWidget(game.Status.toString()).show('Reversi potje is gestopt!');
+                } else if (game.Status === Status.Finished) {
+                    new FeedbackWidget(game.Status.toString()).show('Reversi potje is uitgespeeld!');
+                }
+            }
+
             if (game?.CurrentPlayer.Token !== null && game?.CurrentPlayer.Token !== playerToken) {
                 console.log('Re-rendered the game');
                 render();
@@ -57,6 +77,9 @@ const Game = (function (url) {
         Game.Data.get(Game.Data.getToken()).then(game => {
             stateMap.game = game;
 
+            localStorage.removeItem('notify-player');
+            localStorage.setItem('notify-player', 'false');
+
             // Initialize previous game state, if not present.
             if (stateMap.previousGame === null) {
                 stateMap.previousGame = game;
@@ -64,6 +87,9 @@ const Game = (function (url) {
 
             // Status has changed, so the view must change in order to avoid unexpected behavior, so refresh the page.
             if (game.Status !== stateMap.previousGame.Status) {
+                localStorage.removeItem('notify-player');
+                localStorage.setItem('notify-player', 'true');
+
                 location.reload();
             }
         });
