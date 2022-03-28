@@ -19,13 +19,44 @@ const Game = (function (url) {
     const init = function (callback) {
         callback();
 
+        const gameContainer = Game.Data.getContainer();
+        const gameToken = Game.Data.getToken();
+        const playerToken = Game.Data.getPlayerToken();
+        if (gameToken == null || playerToken == null) {
+            throw new Error('Cannot render the game');
+        }
+
         // Refreshes the game state every 2 seconds.
         render();
         setInterval(function () {
-            render();
+            refreshGameState();
+
+            // @todo: Test if this works while playing for real.
+            const game = get();
+            if (game?.CurrentPlayer.Token !== null && game?.CurrentPlayer.Token !== playerToken) {
+                console.log('Re-rendered the game');
+                render();
+                return;
+            }
 
             console.log('Refreshed game state');
         }, config.refreshRate);
+
+        // Creates the event and listens to it for refreshing the game.
+        gameContainer.bind('refresh-reversi', function () {
+            console.log('refreshed reversi');
+
+            render();
+        });
+    };
+
+    /**
+     * Refreshes the game state.
+     */
+    const refreshGameState = function () {
+        Game.Data.get(Game.Data.getToken()).then(game => {
+            stateMap.game = game;
+        });
     };
 
     /**
@@ -33,13 +64,14 @@ const Game = (function (url) {
      */
     const render = function () {
         const gameToken = Game.Data.getToken();
+        const playerToken = Game.Data.getPlayerToken();
+
         Game.Data.get(gameToken).then(game => {
             stateMap.game = game;
 
-            const gamePlay = Game.Data.getGamePlayContainer();
-            gamePlay.html('');
+            new GameBoardWidget(Game.Data.getGamePlayContainer(), game, playerToken).render();
 
-            gamePlay.append(game.ToString);
+            Game.Reversi.initClickableFiches();
         });
     };
 

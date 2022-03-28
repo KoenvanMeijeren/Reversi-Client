@@ -3,7 +3,7 @@ class PlayerModel {
     /**
      * The token of the player.
      *
-     *@type {string}
+     *@type {string|null}
      */
     #Token;
 
@@ -17,7 +17,7 @@ class PlayerModel {
     /**
      * Constructs the player object.
      *
-     * @param {string} token
+     * @param {string|null} token
      * @param {Color} color
      */
     constructor (token, color) {
@@ -28,7 +28,7 @@ class PlayerModel {
     /**
      * Gets the token.
      *
-     * @returns {string}
+     * @returns {string|null}
      *   The token.
      */
     get Token () {

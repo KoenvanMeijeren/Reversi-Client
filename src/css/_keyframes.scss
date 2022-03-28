@@ -11,11 +11,40 @@
     transform: translate3d(-5px, 0, 0);
   }
 
-  8%, 12% {
-    transform: translate3d(5px, 0, 0);
-  }
+    8%, 12% {
+        transform: translate3d(5px, 0, 0);
+    }
 
-  18.1% {
-    transform: translate3d(0px, 0, 0);
-  }
+    18.1% {
+        transform: translate3d(0px, 0, 0);
+    }
+}
+
+@keyframes fadein {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes fadeout {
+    from {
+        opacity: 1;
+    }
+    to {
+        opacity: 0;
+    }
+}
+
+@-webkit-keyframes flipHeadsWithOpacity {
+    from {
+        opacity: 1;
+        transform: rotateY(0);
+    }
+    to {
+        transform: rotateY(1800deg);
+        opacity: 0;
+    }
 }

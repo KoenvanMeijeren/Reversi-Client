@@ -17,6 +17,7 @@ Game.Data = (function () {
                     new PlayerTwo('qwerty'),
                     new PlayerUndefined('abcdef'),
                     '[[0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0],[0,0,0,1,2,0,0,0],[0,0,0,2,1,0,0,0],[0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0]]',
+                    '[[false,false,false,false,false,false,false,false],[false,false,false,false,false,false,false,false],[false,false,false,false,true,false,false,false],[false,false,false,false,false,true,false,false],[false,false,true,false,false,false,false,false],[false,false,false,true,false,false,false,false],[false,false,false,false,false,false,false,false],[false,false,false,false,false,false,false,false]]',
                     Status.Created
                 )
             }
@@ -63,6 +64,16 @@ Game.Data = (function () {
     }
 
     /**
+     * Gets the token of the player.
+     *
+     * @return {string}
+     *   The player token.
+     */
+    function getPlayerToken () {
+        return this.getContainer().data('game-player');
+    }
+
+    /**
      * Gets the state of the game.
      *
      * @param {string} token
@@ -86,6 +97,7 @@ Game.Data = (function () {
                     new PlayerTwo(data.playerTwo.token),
                     new PlayerModel(data.currentPlayer.token, data.currentPlayer.color),
                     data.board,
+                    data.possibleMoves,
                     data.status
                 );
             })
@@ -97,6 +109,30 @@ Game.Data = (function () {
 
                 console.log('Er ging iets fout tijdens het ophalen van de gegevens.');
             });
+    }
+
+    /**
+     * Saves the do move action.
+     *
+     * @param {string} token
+     *   The token of the game.
+     * @param {string} playerToken
+     *   The token of the player.
+     * @param {number} row
+     *   The row.
+     * @param {number} column
+     *   The column.
+     *
+     * @return Promise
+     *   The promise.
+     */
+    function saveDoMove (token, playerToken, row, column) {
+        return putApiData(`${config.baseUrl}/do-move`, {
+            token: token,
+            playerToken: playerToken,
+            row: row,
+            column: column
+        });
     }
 
     /**
@@ -137,6 +173,36 @@ Game.Data = (function () {
     }
 
     /**
+     * PUTs the data into the designated URL of the API.
+     *
+     * @param {string} url
+     *   The url to upload the data to.
+     * @param {object} data
+     *   The data to be uploaded.
+     *
+     * @returns {Promise}
+     *   The promise.
+     */
+    function putApiData (url, data) {
+        return $.ajax({
+            url: url,
+            type: 'PUT',
+            data: JSON.stringify(data),
+            contentType: 'application/json',
+            dataType: 'json',
+        })
+            .then(response => response)
+            .catch(exception => {
+                if (Env.isDevelopment()) {
+                    console.log(exception);
+                    return;
+                }
+
+                console.log('Er ging iets fout tijdens het opslaan van de gegevens.');
+            });
+    }
+
+    /**
      * Gets the mock data for the given url.
      *
      * @param {string} url
@@ -154,10 +220,12 @@ Game.Data = (function () {
     }
 
     return {
-        init: init,
-        getContainer: getContainer,
-        getGamePlayContainer: getGamePlayContainer,
-        getToken: getToken,
-        get: get,
+        init,
+        getContainer,
+        getGamePlayContainer,
+        getToken,
+        getPlayerToken,
+        get,
+        saveDoMove,
     };
 })();

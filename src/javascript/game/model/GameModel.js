@@ -75,6 +75,13 @@ class GameModel {
     #Board;
 
     /**
+     * The possible moves.
+     *
+     * @type {Array<Array<boolean>>}
+     */
+    #PossibleMoves;
+
+    /**
      * The status.
      *
      * @type {Status}
@@ -82,7 +89,7 @@ class GameModel {
     #Status;
 
     /**
-   * Constructs the new game object.
+     * Constructs the new game object.
      *
      * @param {number} id
      * @param {string} description
@@ -91,16 +98,18 @@ class GameModel {
      * @param {PlayerModel} playerTwo
      * @param {PlayerModel} currentPlayer
      * @param {string} board
+     * @param {string} possibleMoves
      * @param {Status} status
      */
-    constructor (id, description, token, playerOne, playerTwo, currentPlayer, board, status) {
+    constructor (id, description, token, playerOne, playerTwo, currentPlayer, board, possibleMoves, status) {
         this.#Id = id;
         this.#Description = description;
         this.#Token = token;
         this.#PlayerOne = playerOne;
         this.#PlayerTwo = playerTwo;
         this.#CurrentPlayer = currentPlayer;
-        this.#Board = this.BoardToArray(board);
+        this.#Board = GameModel.#BoardToArray(board);
+        this.#PossibleMoves = GameModel.#PossibleMovesToArray(possibleMoves);
         this.#Status = status;
     }
 
@@ -132,6 +141,10 @@ class GameModel {
         return this.#Board;
     }
 
+    get PossibleMoves () {
+        return this.#PossibleMoves;
+    }
+
     get Status () {
         return this.#Status;
     }
@@ -155,7 +168,7 @@ class GameModel {
      * @return {Array<Array<Color>>}
      *   The board as object.
      */
-    BoardToArray (board) {
+    static #BoardToArray (board) {
         const input = board
             .replace('[[', '')
             .replace(']]', '')
@@ -196,6 +209,47 @@ class GameModel {
                     }
 
                     throw new Error('Invalid value given! Expected one of the color values, but received: ' + column);
+                }
+            });
+
+            result[rowIndex] = row;
+        });
+
+        return result;
+    }
+
+    /**
+     * Renders the possible moves string to an array.
+     *
+     * @param {string} possibleMoves
+     *   The possible moves as a string.
+     *
+     * @return {Array<Array<boolean>>}
+     *   The board as object.
+     */
+    static #PossibleMovesToArray (possibleMoves) {
+        const input = possibleMoves
+            .replace('[[', '')
+            .replace(']]', '')
+            .split('],[');
+
+        const convertedInput = [];
+        input.forEach(function (values, index) {
+            convertedInput[index] = values.split(',');
+        });
+
+        let result = [];
+        convertedInput.forEach(function (row, rowIndex) {
+            row.forEach(function (column, columnIndex) {
+                switch (column) {
+                case 'true':
+                    row[columnIndex] = true;
+                    break;
+                case 'false':
+                    row[columnIndex] = false;
+                    break;
+                default:
+                    throw new Error('Invalid value given! Expected one of the boolean values, but received: ' + column);
                 }
             });
 
