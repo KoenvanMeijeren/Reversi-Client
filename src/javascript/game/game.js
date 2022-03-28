@@ -51,6 +51,8 @@ const Game = (function (url) {
             stateMap.game = game;
 
             new GameBoardWidget(Game.Data.getGamePlayContainer(), game).render();
+
+            Game.Reversi.initClickableFiches();
         });
     };
 
