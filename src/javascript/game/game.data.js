@@ -112,6 +112,30 @@ Game.Data = (function () {
     }
 
     /**
+     * Saves the do move action.
+     *
+     * @param {string} token
+     *   The token of the game.
+     * @param {string} playerToken
+     *   The token of the player.
+     * @param {number} row
+     *   The row.
+     * @param {number} column
+     *   The column.
+     *
+     * @return Promise
+     *   The promise.
+     */
+    function saveDoMove (token, playerToken, row, column) {
+        return putApiData(`${config.baseUrl}/do-move`, {
+            token: token,
+            playerToken: playerToken,
+            row: row,
+            column: column
+        });
+    }
+
+    /**
      * Gets the data from the API.
      *
      * @param {string} token
@@ -149,6 +173,36 @@ Game.Data = (function () {
     }
 
     /**
+     * PUTs the data into the designated URL of the API.
+     *
+     * @param {string} url
+     *   The url to upload the data to.
+     * @param {object} data
+     *   The data to be uploaded.
+     *
+     * @returns {Promise}
+     *   The promise.
+     */
+    function putApiData (url, data) {
+        return $.ajax({
+            url: url,
+            type: 'PUT',
+            data: JSON.stringify(data),
+            contentType: 'application/json',
+            dataType: 'json',
+        })
+            .then(response => response)
+            .catch(exception => {
+                if (Env.isDevelopment()) {
+                    console.log(exception);
+                    return;
+                }
+
+                console.log('Er ging iets fout tijdens het opslaan van de gegevens.');
+            });
+    }
+
+    /**
      * Gets the mock data for the given url.
      *
      * @param {string} url
@@ -172,5 +226,6 @@ Game.Data = (function () {
         getToken,
         getPlayerToken,
         get,
+        saveDoMove,
     };
 })();

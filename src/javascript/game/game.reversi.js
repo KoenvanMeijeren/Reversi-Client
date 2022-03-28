@@ -16,10 +16,18 @@ Game.Reversi = (function () {
     const initClickableFiches = function () {
         $('.reversi-column div[data-selectable="true"]').bind('click', function () {
             const element = $(this);
+            const token = Game.Data.getToken();
+            const playerToken = Game.Data.getPlayerToken();
             const color = Game.get().CurrentPlayer.Color;
+            const row = element.data('row');
+            const column = element.data('column');
 
             element.attr('data-color', color);
             element.attr('data-selectable', 'false');
+
+            Game.Data.saveDoMove(token, playerToken, row, column).then(function () {
+                Game.Data.getContainer().trigger('refresh-reversi');
+            });
         });
     };
 

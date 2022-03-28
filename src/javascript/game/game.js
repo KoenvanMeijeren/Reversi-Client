@@ -19,6 +19,7 @@ const Game = (function (url) {
     const init = function (callback) {
         callback();
 
+        const gameContainer = Game.Data.getContainer();
         const gameToken = Game.Data.getToken();
         const playerToken = Game.Data.getPlayerToken();
         if (gameToken == null || playerToken == null) {
@@ -28,9 +29,7 @@ const Game = (function (url) {
         // Refreshes the game state every 2 seconds.
         render();
         setInterval(function () {
-            Game.Data.get(gameToken).then(game => {
-                stateMap.game = game;
-            });
+            refreshGameState();
 
             // @todo: Test if this works while playing for real.
             const game = get();
@@ -42,6 +41,22 @@ const Game = (function (url) {
 
             console.log('Refreshed game state');
         }, config.refreshRate);
+
+        // Creates the event and listens to it for refreshing the game.
+        gameContainer.bind('refresh-reversi', function () {
+            console.log('refreshed reversi');
+
+            render();
+        });
+    };
+
+    /**
+     * Refreshes the game state.
+     */
+    const refreshGameState = function () {
+        Game.Data.get(Game.Data.getToken()).then(game => {
+            stateMap.game = game;
+        });
     };
 
     /**
@@ -49,10 +64,12 @@ const Game = (function (url) {
      */
     const render = function () {
         const gameToken = Game.Data.getToken();
+        const playerToken = Game.Data.getPlayerToken();
+
         Game.Data.get(gameToken).then(game => {
             stateMap.game = game;
 
-            new GameBoardWidget(Game.Data.getGamePlayContainer(), game).render();
+            new GameBoardWidget(Game.Data.getGamePlayContainer(), game, playerToken).render();
 
             Game.Reversi.initClickableFiches();
         });
