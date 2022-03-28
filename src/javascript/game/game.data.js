@@ -123,7 +123,7 @@ Game.Data = (function () {
      * @param {number} column
      *   The column.
      *
-     * @return Promise
+     * @return {Promise}
      *   The promise.
      */
     function saveDoMove (token, playerToken, row, column) {

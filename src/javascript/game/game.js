@@ -7,7 +7,9 @@ const Game = (function (url) {
     };
 
     let stateMap = {
-        game: null
+        game: null,
+        // Holds the game version with a different status from the current one.
+        previousGame: null
     };
 
     /**
@@ -26,12 +28,12 @@ const Game = (function (url) {
             throw new Error('Cannot render the game');
         }
 
-        // Refreshes the game state every 2 seconds.
+        // Initializes the game.
         render();
+
+        // Refreshes the game state every 2 seconds.
         setInterval(function () {
             refreshGameState();
-
-            // @todo: Test if this works while playing for real.
             const game = get();
             if (game?.CurrentPlayer.Token !== null && game?.CurrentPlayer.Token !== playerToken) {
                 console.log('Re-rendered the game');
@@ -44,8 +46,6 @@ const Game = (function (url) {
 
         // Creates the event and listens to it for refreshing the game.
         gameContainer.bind('refresh-reversi', function () {
-            console.log('refreshed reversi');
-
             render();
         });
     };
@@ -56,6 +56,16 @@ const Game = (function (url) {
     const refreshGameState = function () {
         Game.Data.get(Game.Data.getToken()).then(game => {
             stateMap.game = game;
+
+            // Initialize previous game state, if not present.
+            if (stateMap.previousGame === null) {
+                stateMap.previousGame = game;
+            }
+
+            // Status has changed, so the view must change in order to avoid unexpected behavior, so refresh the page.
+            if (game.Status !== stateMap.previousGame.Status) {
+                location.reload();
+            }
         });
     };
 
