@@ -45,21 +45,24 @@ class GameBoardWidget {
      *   The renderable table.
      */
     #createTable () {
+        const game = this.#game;
         const table = document.createElement('table');
         table.setAttribute('class', 'reversi-table');
 
-        this.#game.Board.forEach(function (boardRow) {
+        this.#game.Board.forEach(function (boardRow, boardRowIndex) {
             const row = document.createElement('tr');
             row.setAttribute('class', 'reversi-row');
             table.appendChild(row);
 
-            boardRow.forEach(function (boardColumn) {
+            boardRow.forEach(function (boardColumn, boardColumnIndex) {
                 const column = document.createElement('td');
                 column.setAttribute('class', `reversi-column`);
 
+                const possibleMove = game.PossibleMoves[boardRowIndex][boardColumnIndex];
+
                 const fiche = document.createElement('div');
                 fiche.setAttribute('class', 'reversi-column-fiche');
-                fiche.setAttribute('data-selectable', boardColumn === Color.None ? 'true' : 'false');
+                fiche.setAttribute('data-selectable', possibleMove ? 'true' : 'false');
                 fiche.setAttribute('data-color', boardColumn.toString());
 
                 column.appendChild(fiche);

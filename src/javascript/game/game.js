@@ -35,7 +35,9 @@ const Game = (function (url) {
             // @todo: Test if this works while playing for real.
             const game = get();
             if (game?.CurrentPlayer.Token !== null && game?.CurrentPlayer.Token !== playerToken) {
+                console.log('Re-rendered the game');
                 render();
+                return;
             }
 
             console.log('Refreshed game state');

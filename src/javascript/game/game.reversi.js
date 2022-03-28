@@ -18,7 +18,6 @@ Game.Reversi = (function () {
             const element = $(this);
             const color = Game.get().CurrentPlayer.Color;
 
-            console.log(element);
             element.attr('data-color', color);
             element.attr('data-selectable', 'false');
         });
