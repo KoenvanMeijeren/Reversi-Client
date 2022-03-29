@@ -3,7 +3,9 @@ const apiUrl = 'https://localhost:7042/api/Game';
 const Game = (function (url) {
     const config = {
         apiUrl: url,
-        refreshRate: 1000
+        refreshRate: 1000,
+        // In seconds
+        waitingThreshold: 30,
     };
 
     let stateMap = {
@@ -31,6 +33,9 @@ const Game = (function (url) {
         // Initializes the game.
         render();
 
+        // Resets the counter, in order to play the game again.
+        localStorage.removeItem('counter');
+
         Game.Data.get(Game.Data.getToken()).then(game => {
             // Game has ended, so it is pointless to start refreshing the state.
             const initGame = get();
@@ -55,11 +60,13 @@ const Game = (function (url) {
 
                 refreshGameState();
                 game = get();
+                const isWaitingPlayer = game?.CurrentPlayer.Token !== null && game?.CurrentPlayer.Token !== playerToken;
 
                 saveScore(game);
                 notifyPlayerIfRequested(game);
+                checkIfOpponentIsActive(isWaitingPlayer);
 
-                if (game?.CurrentPlayer.Token !== null && game?.CurrentPlayer.Token !== playerToken) {
+                if (isWaitingPlayer) {
                     render();
                 }
             }, config.refreshRate);
@@ -115,6 +122,39 @@ const Game = (function (url) {
     };
 
     /**
+     * Checks if the opponent is still active. If not, the game will be ended and the winner will be determined.
+     *
+     * @param {boolean} isWaitingPlayer
+     *   If the current player is the waiting player.
+     */
+    const checkIfOpponentIsActive = function (isWaitingPlayer) {
+        const counterKey = 'counter';
+        if (isWaitingPlayer) {
+            localStorage.removeItem(counterKey);
+            return;
+        }
+
+        let counterValue = Number.parseInt(localStorage.getItem(counterKey));
+        if (isNaN(counterValue)) {
+            counterValue = 0;
+        }
+
+        counterValue++;
+        localStorage.setItem(counterKey, counterValue.toString());
+
+        const halfOfWaitingThreshold = Math.round(config.waitingThreshold / 2);
+        if (counterValue === halfOfWaitingThreshold) {
+            new FeedbackWidget('counter-message' + randomId(10))
+                .show('Pas op! Als je nog langer wacht, dan wordt je uit het potje gegooid.', FeedbackTypes.warning);
+            return;
+        }
+
+        if (counterValue > config.waitingThreshold) {
+            Game.Data.quit(get().Token);
+        }
+    };
+
+    /**
      * Saves the score of the game.
      *
      * @param {GameModel} game
@@ -155,13 +195,13 @@ const Game = (function (url) {
         }
 
         if (game.Status === Status.Pending) {
-            new FeedbackWidget(game.Status.toString()).show('Tegenstander gevonden!');
+            new FeedbackWidget(game.Status.toString() + randomId(10)).show('Tegenstander gevonden!');
         } else if (game.Status === Status.Playing) {
-            new FeedbackWidget(game.Status.toString()).show('Reversi potje is gestart!');
+            new FeedbackWidget(game.Status.toString() + randomId(10)).show('Reversi potje is gestart!');
         } else if (game.Status === Status.Quit) {
-            new FeedbackWidget(game.Status.toString()).show('Reversi potje is gestopt. ' + winnerText);
+            new FeedbackWidget(game.Status.toString() + randomId(10)).show('Reversi potje is gestopt. ' + winnerText);
         } else if (game.Status === Status.Finished) {
-            new FeedbackWidget(game.Status.toString()).show('Reversi potje is uitgespeeld. ' + winnerText);
+            new FeedbackWidget(game.Status.toString() + randomId(10)).show('Reversi potje is uitgespeeld. ' + winnerText);
         }
     };
 
