@@ -203,6 +203,16 @@ class GameModel {
     }
 
     /**
+     * Determines if the game is currently played.
+     *
+     * @return {boolean}
+     *   True if the game is played.
+     */
+    IsPlaying () {
+        return this.#Status === Status.Playing;
+    }
+
+    /**
      * Renders the board string to an array.
      *
      * @param {string} board

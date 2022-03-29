@@ -64,13 +64,13 @@ const Game = (function (url) {
 
                 saveScore(game);
                 notifyPlayerIfRequested(game);
-                updateQuitGameTimer(isWaitingPlayer);
+                updateQuitGameTimer(game, isWaitingPlayer);
 
                 if (isWaitingPlayer) {
                     render();
                 }
 
-                renderQuitGameTimerProgressBar(gameContainer);
+                renderQuitGameTimerProgressBar(game, gameContainer);
             }, config.refreshRate);
 
             // Creates the event and listens to it for refreshing the game.
@@ -129,10 +129,16 @@ const Game = (function (url) {
     /**
      * Renders the quit game timer progress bar.
      *
+     * @param {GameModel} game
+     *   The game.
      * @param {jQuery} parent
      *   The parent of the progress bar.
      */
-    const renderQuitGameTimerProgressBar = function (parent) {
+    const renderQuitGameTimerProgressBar = function (game, parent) {
+        if (!game.IsPlaying()) {
+            return;
+        }
+
         const progressContainer = parent.find('#quit-game-timer-container');
         const quitGameCounter = getWaitingCounterValue();
         const progressCounter = config.waitingThreshold - quitGameCounter;
@@ -152,10 +158,16 @@ const Game = (function (url) {
     /**
      * Checks if the opponent is still active. If not, the game will be ended and the winner will be determined.
      *
+     * @param {GameModel} game
+     *   The game.
      * @param {boolean} isWaitingPlayer
      *   If the current player is the waiting player.
      */
-    const updateQuitGameTimer = function (isWaitingPlayer) {
+    const updateQuitGameTimer = function (game, isWaitingPlayer) {
+        if (!game.IsPlaying()) {
+            return;
+        }
+
         const counterKey = 'counter';
 
         let counterValue = getWaitingCounterValue();
