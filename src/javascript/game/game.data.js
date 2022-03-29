@@ -114,6 +114,19 @@ Game.Data = (function () {
     }
 
     /**
+     * Saves the game score.
+     *
+     * @param {string} token
+     *   The token of the game.
+     *
+     * @return {Promise}
+     *   The promise.
+     */
+    const saveScore = function (token) {
+        return getApiData(`https://localhost:7126/api/GameScore/${token}`);
+    };
+
+    /**
      * Saves the do move action.
      *
      * @param {string} token
@@ -229,5 +242,6 @@ Game.Data = (function () {
         getPlayerToken,
         get,
         saveDoMove,
+        saveScore,
     };
 })();

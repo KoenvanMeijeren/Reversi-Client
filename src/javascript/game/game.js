@@ -35,6 +35,7 @@ const Game = (function (url) {
             // Game has ended, so it is pointless to start refreshing the state.
             const initGame = get();
             if (initGame.IsEnded()) {
+                saveScore(initGame);
                 notifyPlayerIfRequested(initGame);
                 localStorage.removeItem('notify-player');
 
@@ -55,6 +56,7 @@ const Game = (function (url) {
                 refreshGameState();
                 game = get();
 
+                saveScore(game);
                 notifyPlayerIfRequested(game);
 
                 if (game?.CurrentPlayer.Token !== null && game?.CurrentPlayer.Token !== playerToken) {
@@ -110,6 +112,20 @@ const Game = (function (url) {
 
             Game.Reversi.initClickableFiches();
         });
+    };
+
+    /**
+     * Saves the score of the game.
+     *
+     * @param {GameModel} game
+     *   The game.
+     */
+    const saveScore = function (game) {
+        if (!game.IsEnded()) {
+            return;
+        }
+
+        Game.Data.saveScore(game.Token);
     };
 
     /**
