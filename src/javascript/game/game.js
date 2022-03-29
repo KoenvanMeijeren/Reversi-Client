@@ -230,7 +230,7 @@ const Game = (function (url) {
             }
         } else if (game.PredominantColor === Color.Black) {
             winnerText = 'De tegenstander heeft gewonnnen!';
-            if (playerToken === game.PlayerOne.Token) {
+            if (playerToken === game.PlayerTwo.Token) {
                 winnerText = 'Jij hebt gewonnen!';
             }
         }
