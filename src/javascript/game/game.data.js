@@ -151,6 +151,19 @@ Game.Data = (function () {
     }
 
     /**
+     * Quits the game.
+     *
+     * @param {string} token
+     *   The token.
+     *
+     * @return {Promise}
+     *   The promise.
+     */
+    function quit (token) {
+        return putApiData(`${config.baseUrl}/${token}/quit`);
+    }
+
+    /**
      * Gets the data from the API.
      *
      * @param {string} token
@@ -243,5 +256,6 @@ Game.Data = (function () {
         get,
         saveDoMove,
         saveScore,
+        quit,
     };
 })();

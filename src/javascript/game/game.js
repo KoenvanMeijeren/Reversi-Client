@@ -3,7 +3,9 @@ const apiUrl = 'https://localhost:7042/api/Game';
 const Game = (function (url) {
     const config = {
         apiUrl: url,
-        refreshRate: 1000
+        refreshRate: 1000,
+        // In seconds
+        waitingThreshold: 60,
     };
 
     let stateMap = {
@@ -31,6 +33,9 @@ const Game = (function (url) {
         // Initializes the game.
         render();
 
+        // Resets the counter, in order to play the game again.
+        localStorage.removeItem('counter');
+
         Game.Data.get(Game.Data.getToken()).then(game => {
             // Game has ended, so it is pointless to start refreshing the state.
             const initGame = get();
@@ -55,18 +60,25 @@ const Game = (function (url) {
 
                 refreshGameState();
                 game = get();
+                const isWaitingPlayer = game?.CurrentPlayer.Token !== null && game?.CurrentPlayer.Token !== playerToken;
 
                 saveScore(game);
                 notifyPlayerIfRequested(game);
+                updateQuitGameTimer(game, isWaitingPlayer);
 
-                if (game?.CurrentPlayer.Token !== null && game?.CurrentPlayer.Token !== playerToken) {
+                if (isWaitingPlayer) {
                     render();
                 }
+
+                renderQuitGameTimerProgressBar(game, gameContainer);
             }, config.refreshRate);
 
             // Creates the event and listens to it for refreshing the game.
             gameContainer.bind('refresh-reversi', function () {
                 render();
+
+                // Resets the counter, in order to play the game again.
+                localStorage.removeItem('counter');
             });
         });
     };
@@ -115,6 +127,87 @@ const Game = (function (url) {
     };
 
     /**
+     * Renders the quit game timer progress bar.
+     *
+     * @param {GameModel} game
+     *   The game.
+     * @param {jQuery} parent
+     *   The parent of the progress bar.
+     */
+    const renderQuitGameTimerProgressBar = function (game, parent) {
+        if (!game.IsPlaying()) {
+            return;
+        }
+
+        const progressContainer = parent.find('#quit-game-timer-container');
+        const quitGameCounter = getWaitingCounterValue();
+        const progressCounter = config.waitingThreshold - quitGameCounter;
+        const scaleProgress = generateScaleFunction(0, config.waitingThreshold, 0, 100);
+        const progressInPercentage = scaleProgress(quitGameCounter);
+
+        progressContainer.html(
+            '<div class="progress" style="height: 40px;">\n' +
+            `  <div class="progress-bar h5 bg-warning" role="progressbar" aria-valuenow="${progressInPercentage}"\n` +
+            `  aria-valuemin="0" aria-valuemax="100" style="height: 100%; width:${progressInPercentage}%">\n` +
+            `    <span class="sr-only px-lg-3">Nog ${progressCounter} seconden...</span>\n` +
+            '  </div>\n' +
+            '</div>'
+        );
+    };
+
+    /**
+     * Checks if the opponent is still active. If not, the game will be ended and the winner will be determined.
+     *
+     * @param {GameModel} game
+     *   The game.
+     * @param {boolean} isWaitingPlayer
+     *   If the current player is the waiting player.
+     */
+    const updateQuitGameTimer = function (game, isWaitingPlayer) {
+        if (!game.IsPlaying()) {
+            return;
+        }
+
+        const counterKey = 'counter';
+
+        let counterValue = getWaitingCounterValue();
+        counterValue++;
+        localStorage.setItem(counterKey, counterValue.toString());
+
+        const halfOfWaitingThreshold = Math.round(config.waitingThreshold / 2);
+        if (counterValue === halfOfWaitingThreshold) {
+            if (isWaitingPlayer) {
+                new FeedbackWidget('counter-message' + randomId(10))
+                    .show('Pas op! Het potje wordt misschien gestopt omdat je tegenstander nog geen zet heeft gedaan.', FeedbackTypes.warning);
+                return;
+            }
+
+            new FeedbackWidget('counter-message' + randomId(10))
+                .show('Pas op! Als je nog langer wacht, dan wordt je uit het potje gegooid.', FeedbackTypes.warning);
+            return;
+        }
+
+        if (counterValue > config.waitingThreshold) {
+            Game.Data.quit(get().Token);
+        }
+    };
+
+    /**
+     * Gets the waiting counter value.
+     *
+     * @return {number}
+     *   The waiting counter value.
+     */
+    const getWaitingCounterValue = function () {
+        const counterValue = Number.parseInt(localStorage.getItem('counter'));
+        if (isNaN(counterValue)) {
+            return 0;
+        }
+
+        return counterValue;
+    };
+
+    /**
      * Saves the score of the game.
      *
      * @param {GameModel} game
@@ -149,19 +242,19 @@ const Game = (function (url) {
             }
         } else if (game.PredominantColor === Color.Black) {
             winnerText = 'De tegenstander heeft gewonnnen!';
-            if (playerToken === game.PlayerOne.Token) {
+            if (playerToken === game.PlayerTwo.Token) {
                 winnerText = 'Jij hebt gewonnen!';
             }
         }
 
         if (game.Status === Status.Pending) {
-            new FeedbackWidget(game.Status.toString()).show('Tegenstander gevonden!');
+            new FeedbackWidget(game.Status.toString() + randomId(10)).show('Tegenstander gevonden!');
         } else if (game.Status === Status.Playing) {
-            new FeedbackWidget(game.Status.toString()).show('Reversi potje is gestart!');
+            new FeedbackWidget(game.Status.toString() + randomId(10)).show('Reversi potje is gestart!');
         } else if (game.Status === Status.Quit) {
-            new FeedbackWidget(game.Status.toString()).show('Reversi potje is gestopt. ' + winnerText);
+            new FeedbackWidget(game.Status.toString() + randomId(10)).show('Reversi potje is gestopt. ' + winnerText);
         } else if (game.Status === Status.Finished) {
-            new FeedbackWidget(game.Status.toString()).show('Reversi potje is uitgespeeld. ' + winnerText);
+            new FeedbackWidget(game.Status.toString() + randomId(10)).show('Reversi potje is uitgespeeld. ' + winnerText);
         }
     };
 
