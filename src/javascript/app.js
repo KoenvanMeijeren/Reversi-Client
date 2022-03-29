@@ -9,6 +9,15 @@ function randomId (length) {
     return result;
 }
 
+function generateScaleFunction (prevMin, prevMax, newMin, newMax) {
+    const offset = newMin - prevMin,
+        scale = (newMax - newMin) / (prevMax - prevMin);
+
+    return function (x) {
+        return offset + scale * x;
+    };
+}
+
 $(document).ready(function () {
     Env.init(Environments.production);
     Game.init(preGameInit);

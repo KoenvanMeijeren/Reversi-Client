@@ -5,7 +5,7 @@ const Game = (function (url) {
         apiUrl: url,
         refreshRate: 1000,
         // In seconds
-        waitingThreshold: 30,
+        waitingThreshold: 60,
     };
 
     let stateMap = {
@@ -64,16 +64,21 @@ const Game = (function (url) {
 
                 saveScore(game);
                 notifyPlayerIfRequested(game);
-                checkIfOpponentIsActive(isWaitingPlayer);
+                updateQuitGameTimer(isWaitingPlayer);
 
                 if (isWaitingPlayer) {
                     render();
                 }
+
+                renderQuitGameTimerProgressBar(gameContainer);
             }, config.refreshRate);
 
             // Creates the event and listens to it for refreshing the game.
             gameContainer.bind('refresh-reversi', function () {
                 render();
+
+                // Resets the counter, in order to play the game again.
+                localStorage.removeItem('counter');
             });
         });
     };
@@ -122,28 +127,49 @@ const Game = (function (url) {
     };
 
     /**
+     * Renders the quit game timer progress bar.
+     *
+     * @param {jQuery} parent
+     *   The parent of the progress bar.
+     */
+    const renderQuitGameTimerProgressBar = function (parent) {
+        const progressContainer = parent.find('#quit-game-timer-container');
+        const quitGameCounter = getWaitingCounterValue();
+        const progressCounter = config.waitingThreshold - quitGameCounter;
+        const scaleProgress = generateScaleFunction(0, config.waitingThreshold, 0, 100);
+        const progressInPercentage = scaleProgress(quitGameCounter);
+
+        progressContainer.html(
+            '<div class="progress" style="height: 40px;">\n' +
+            `  <div class="progress-bar h5 bg-warning" role="progressbar" aria-valuenow="${progressInPercentage}"\n` +
+            `  aria-valuemin="0" aria-valuemax="100" style="height: 100%; width:${progressInPercentage}%">\n` +
+            `    <span class="sr-only px-lg-3">Nog ${progressCounter} seconden...</span>\n` +
+            '  </div>\n' +
+            '</div>'
+        );
+    };
+
+    /**
      * Checks if the opponent is still active. If not, the game will be ended and the winner will be determined.
      *
      * @param {boolean} isWaitingPlayer
      *   If the current player is the waiting player.
      */
-    const checkIfOpponentIsActive = function (isWaitingPlayer) {
+    const updateQuitGameTimer = function (isWaitingPlayer) {
         const counterKey = 'counter';
-        if (isWaitingPlayer) {
-            localStorage.removeItem(counterKey);
-            return;
-        }
 
-        let counterValue = Number.parseInt(localStorage.getItem(counterKey));
-        if (isNaN(counterValue)) {
-            counterValue = 0;
-        }
-
+        let counterValue = getWaitingCounterValue();
         counterValue++;
         localStorage.setItem(counterKey, counterValue.toString());
 
         const halfOfWaitingThreshold = Math.round(config.waitingThreshold / 2);
         if (counterValue === halfOfWaitingThreshold) {
+            if (isWaitingPlayer) {
+                new FeedbackWidget('counter-message' + randomId(10))
+                    .show('Pas op! Het potje wordt misschien gestopt omdat je tegenstander nog geen zet heeft gedaan.', FeedbackTypes.warning);
+                return;
+            }
+
             new FeedbackWidget('counter-message' + randomId(10))
                 .show('Pas op! Als je nog langer wacht, dan wordt je uit het potje gegooid.', FeedbackTypes.warning);
             return;
@@ -152,6 +178,21 @@ const Game = (function (url) {
         if (counterValue > config.waitingThreshold) {
             Game.Data.quit(get().Token);
         }
+    };
+
+    /**
+     * Gets the waiting counter value.
+     *
+     * @return {number}
+     *   The waiting counter value.
+     */
+    const getWaitingCounterValue = function () {
+        const counterValue = Number.parseInt(localStorage.getItem('counter'));
+        if (isNaN(counterValue)) {
+            return 0;
+        }
+
+        return counterValue;
     };
 
     /**
