@@ -8,7 +8,7 @@
     "test": "tests"
   },
   "scripts": {
-      "build": "gulp clean && gulp copyHandlebars && gulp templates && gulp js && gulp css && gulp html",
+      "build": "gulp clean && gulp copyHandlebars && gulp templates && gulp js && gulp css && gulp html && gulp icons",
       "js": "gulp copyHandlebars && gulp templates && gulp js",
       "code-standards": "npx eslint"
   },
