@@ -1,13 +1,4 @@
 Game.Reversi = (function () {
-    const config = {};
-
-    /**
-     * Initializes the game.
-     */
-    const init = function () {
-
-    };
-
     /**
      * Initializes the clickable fiches.
      *
@@ -35,7 +26,6 @@ Game.Reversi = (function () {
     };
 
     return {
-        init,
         initClickableFiches
     };
 })();
