@@ -12,12 +12,18 @@ module.exports = {
         ],
         icons: [
             'src/icons/**/*'
-        ]
+        ],
+        templates: [
+            'src/templates/*.hbs'
+        ],
+        handlebars: [
+            'src/lib/handlebars.js'
+        ],
     },
   fileOrder: {
     js: [
-        'node_modules/jquery/dist/jquery.min.js',
-        'node_modules/bootstrap/dist/js/bootstrap.min.js',
+        'node_modules/jquery/dist/*.js',
+        'node_modules/bootstrap/dist/js/*.js',
         'src/javascript/system/environment.js',
         'src/javascript/widget/FeedbackWidget.js',
         'src/javascript/widget/GameBoardWidget.js',

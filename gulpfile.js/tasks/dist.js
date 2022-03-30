@@ -11,6 +11,8 @@ const concat = require('gulp-concat');
 const babel = require('gulp-babel');
 const rename = require('gulp-rename');
 const header = require('gulp-header');
+const declare = require('gulp-declare');
+const wrap = require('gulp-wrap');
 const packageJson = require('../../package.json');
 
 // Js
@@ -28,6 +30,9 @@ const browserSync = require('browser-sync');
 
 // HTML
 const htmlmin = require('gulp-htmlmin');
+
+// Handlebars
+const handlebars = require('gulp-handlebars');
 
 // Template settings
 const banner = {
@@ -178,7 +183,56 @@ const html = function (backendPath) {
                 path.extname = '.html';
             }))
             .pipe(dest('./public'))
-            .pipe(dest(`${backendPath}/public`))
+            .pipe(browserSync.stream());
+    };
+};
+
+/**
+ * Creates the distributed template files.
+ *
+ * @param {string} backendPath
+ *   The path to the backend directory.
+ * @param {string[]} handlebarsFiles
+ *   The handlebars files.
+ *
+ * @return {function(): *}
+ *   The pipeline.
+ */
+const copyHandlebars = function (backendPath, handlebarsFiles) {
+    return function () {
+        return src(handlebarsFiles)
+            .pipe(concat('handlebars.js'))
+            .pipe(dest(outputPath))
+            .pipe(dest(`${backendPath}/${distDirectory}`))
+            .pipe(browserSync.stream());
+    };
+};
+
+/**
+ * Creates the distributed template files.
+ *
+ * @param {string} backendPath
+ *   The path to the backend directory.
+ * @param {string[]} templateFiles
+ *   The template files.
+ *
+ * @return {function(): *}
+ *   The pipeline.
+ */
+const templates = function (backendPath, templateFiles) {
+    return function () {
+        return src(templateFiles)
+            .pipe(handlebars())
+            // Wrap each template function in a call to Handlebars.template
+            .pipe(wrap('Handlebars.template(<%= contents %>)'))
+            // Declare template functions as properties and sub-properties of MyApp.templates
+            .pipe(declare({
+                namespace: 'Reversi.templates',
+                noRedeclare: true, // Avoid duplicate declarations
+            }))
+            .pipe(concat('templates.js'))
+            .pipe(dest(outputPath))
+            .pipe(dest(`${backendPath}/${distDirectory}`))
             .pipe(browserSync.stream());
     };
 };
@@ -188,3 +242,5 @@ exports.javascript = javascript;
 exports.css = css;
 exports.copy = copy;
 exports.html = html;
+exports.copyHandlebars = copyHandlebars;
+exports.templates = templates;
