@@ -32,7 +32,7 @@ module.exports = {
         'src/javascript/game/model/PlayerModel.js',
         'src/javascript/game/game.js',
         'src/javascript/game/game.reversi.js',
-        'src/javascript/game/game.model.js',
+        'src/javascript/game/game.stats.js',
         'src/javascript/game/game.data.js',
         'src/javascript/app.js'
     ],

@@ -1,4 +1,4 @@
-Game.Model = (function () {
+Game.Stats = (function () {
     const config = {};
 
     /**
