@@ -27,6 +27,7 @@ module.exports = {
         'src/javascript/system/environment.js',
         'src/javascript/widget/FeedbackWidget.js',
         'src/javascript/widget/GameBoardWidget.js',
+        'src/javascript/weather/weather.js',
         'src/javascript/game/model/GameModel.js',
         'src/javascript/game/model/PlayerModel.js',
         'src/javascript/game/game.js',

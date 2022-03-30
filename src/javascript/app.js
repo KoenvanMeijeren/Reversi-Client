@@ -30,4 +30,6 @@ $(document).ready(function () {
         Game.Model.init();
         Game.Reversi.init();
     }
+
+    Weather.init('#reversi-weather');
 });
