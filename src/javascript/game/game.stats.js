@@ -9,6 +9,6 @@ Game.Stats = (function () {
     };
 
     return {
-        init: init
+        init
     };
 })();
