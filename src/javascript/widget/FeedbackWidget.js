@@ -40,10 +40,9 @@ class FeedbackWidget {
 
         const element = this.#getElement();
         if (element.length < 1) {
-            $('body').append(`<div id='${elementId}' class='message-alert' role='alert'>
-<a href="#" class="button button-danger button-close" aria-label="Close"></a>
-<div class="message-container"><div class="message"><span class="icon"></span></div> </div>
-</div>`);
+            $('body').append(Reversi.templates.feedbackWidget({
+                elementId: elementId
+            }));
         }
 
         this.hide();
@@ -85,14 +84,19 @@ class FeedbackWidget {
      *   The decline button text.
      * @param {string} accept
      *   The accept button text.
+     *
+     * @return {FeedbackWidget}
+     *   The callable object reference.
      */
     addActions (decline = 'Cancel', accept = 'Ok') {
         const element = this.#getElement();
 
-        element.append(`<div class="actions">
-    <button type="button" class="button button-danger button-decline">${decline}</button>
-    <button type="button" class="button button-primary button-accept">${accept}</button>
-</div>`);
+        element.append(Reversi.templates.feedbackWidgetActions({
+            decline: decline,
+            accept: accept
+        }));
+
+        return this;
     }
 
     /**

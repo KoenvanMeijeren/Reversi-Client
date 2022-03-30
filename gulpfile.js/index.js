@@ -7,6 +7,8 @@ exports.css = require('./tasks/dist').css(config.localServerProjectPath, config.
 exports.clean = require('./tasks/dist').clean(config.localServerProjectPath);
 exports.icons = require('./tasks/dist').copy(config.localServerProjectPath, config.files.icons, 'icons');
 exports.html = require('./tasks/dist').html(config.localServerProjectPath);
+exports.copyHandlebars = require('./tasks/dist').copyHandlebars(config.localServerProjectPath, config.files.handlebars);
+exports.templates = require('./tasks/dist').templates(config.localServerProjectPath, config.files.templates);
 
 exports.server = gulp.task('server', function () {
     browserSync.init({

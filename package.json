@@ -8,8 +8,9 @@
     "test": "tests"
   },
   "scripts": {
-    "build": "gulp clean && gulp js && gulp css && gulp html",
-    "code-standards": "npx eslint"
+      "build": "gulp clean && gulp copyHandlebars && gulp templates && gulp js && gulp css && gulp html",
+      "js": "gulp copyHandlebars && gulp templates && gulp js",
+      "code-standards": "npx eslint"
   },
   "repository": {
     "type": "git",
@@ -57,7 +58,6 @@
   },
   "dependencies": {
       "bootstrap": "^5.1.3",
-      "handlebars": "^4.7.7",
       "jquery": "^3.6.0"
   }
 }
