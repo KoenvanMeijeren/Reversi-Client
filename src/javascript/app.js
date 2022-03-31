@@ -20,8 +20,8 @@ function generateScaleFunction (prevMin, prevMax, newMin, newMax) {
 
 const config = {
     'apiUrl': {
-        'game': 'https://localhost:7042/api/Game',
-        'score': 'https://localhost:7126/api/GameScore'
+        'game': 'https://nr3353.hbo-ict.org/api/Game',
+        'score': 'https://nr3353.hbo-ict.org/api/GameScore'
     },
 };
 
