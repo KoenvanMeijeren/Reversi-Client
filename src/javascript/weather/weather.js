@@ -15,8 +15,6 @@ const Weather = (function () {
         const parent = $(parentSelector);
 
         get('amsterdam').then(function (data) {
-            console.log(data);
-
             parent.html(Reversi.templates.weather({
                 city: 'amsterdam',
                 general: data.weather[0].description,
