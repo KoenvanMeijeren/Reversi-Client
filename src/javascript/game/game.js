@@ -45,6 +45,7 @@ const Game = (function () {
                 saveScore(initGame);
                 notifyPlayerIfRequested(initGame);
                 localStorage.removeItem('notify-player');
+                Game.Stats.init('#reversi-statistics', game.GameStatistics);
 
                 return;
             }
