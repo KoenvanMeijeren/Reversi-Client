@@ -42,8 +42,7 @@ Game.Stats = (function () {
             return true;
         }
 
-        return stateMap.statistics.WhiteFiches !== stateMap.previousStatistics.WhiteFiches
-            || stateMap.statistics.BlackFiches !== stateMap.previousStatistics.BlackFiches;
+        return stateMap.statistics.isEqual(stateMap.previousStatistics);
     }
 
     /**
