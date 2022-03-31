@@ -57,6 +57,7 @@ Game.Stats = (function () {
         parent.append(Reversi.templates.gameStatistics());
 
         createFichesStatisticsChart();
+        createConqueredFichesStatistics();
     }
 
     /**
@@ -64,14 +65,14 @@ Game.Stats = (function () {
      */
     function createFichesStatisticsChart () {
         const statistics = get();
-        const canvas = document.getElementById('gameStatistics').getContext('2d');
+        const canvas = document.getElementById('gameFichesStatistics').getContext('2d');
 
         new Chart(canvas, {
             type: 'bar',
             data: {
                 labels: ['Zwart', 'Wit',],
                 datasets: [{
-                    label: '# van fiches',
+                    label: '# stenen',
                     data: [statistics.BlackFiches, statistics.WhiteFiches],
                     backgroundColor: [
                         'rgba(255, 99, 132, 0.2)',
@@ -92,6 +93,16 @@ Game.Stats = (function () {
                 }
             }
         });
+    }
+
+    /**
+     * Creates the chart for the statistics of the taken fiches.
+     */
+    function createConqueredFichesStatistics () {
+        const statistics = get();
+        const container = document.getElementById('gameConqueredFichesStatistics');
+
+        container.innerText = statistics.ConqueredFiches.toString();
     }
 
     /**

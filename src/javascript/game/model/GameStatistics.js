@@ -5,27 +5,14 @@ class GameStatistics {
      *
      * @type {number}
      */
-    #whiteFiches;
+    #whiteFiches = 0;
 
     /**
      * The amount of black fiches.
      *
      * @type {number}
      */
-    #blackFiches;
-
-    /**
-     * Constructs the game statistics.
-     *
-     * @param {number} whiteFiches
-     *   The white fiches amount.
-     * @param {number} blackFiches
-     *   The black fiches amount.
-     */
-    constructor (whiteFiches = 0, blackFiches = 0) {
-        this.#whiteFiches = whiteFiches;
-        this.#blackFiches = blackFiches;
-    }
+    #blackFiches = 0;
 
     get WhiteFiches () {
         return this.#whiteFiches;
@@ -33,6 +20,16 @@ class GameStatistics {
 
     get BlackFiches () {
         return this.#blackFiches;
+    }
+
+    get ConqueredFiches () {
+        const conqueredFichesString = localStorage.getItem('conqueredFiches');
+        const conqueredFichesNumeric = Number.parseInt(conqueredFichesString);
+        if (isNaN(conqueredFichesNumeric)) {
+            return 0;
+        }
+
+        return conqueredFichesNumeric;
     }
 
     /**
