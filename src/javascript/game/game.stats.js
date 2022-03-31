@@ -25,7 +25,6 @@ Game.Stats = (function () {
         // Updates the previous statistics if the current statistics are different.
         if (statisticsHasChanged()) {
             stateMap.previousStatistics = gameStatistics;
-            console.log('changed');
 
             render(parentSelector);
         }
