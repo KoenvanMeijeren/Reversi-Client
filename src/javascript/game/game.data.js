@@ -2,10 +2,9 @@ Game.Data = (function () {
     /**
      * The config.
      *
-     * @type {{baseUrl: string, mock: [{subUrl: string, data: GameModel}]}}
+     * @type {{mock: [{subUrl: string, data: GameModel}]}}
      */
     const config = {
-        baseUrl: Game.getApiUrl(),
         mock: [
             {
                 subUrl: 'token/',
@@ -118,7 +117,7 @@ Game.Data = (function () {
      *   The promise.
      */
     const saveScore = function (token) {
-        return getApiData(`https://localhost:7126/api/GameScore/${token}`);
+        return getApiData(`${Game.getScoreApiUrl()}/${token}`);
     };
 
     /**
@@ -137,7 +136,7 @@ Game.Data = (function () {
      *   The promise.
      */
     function saveDoMove (token, playerToken, row, column) {
-        return putApiData(`${config.baseUrl}/do-move`, {
+        return putApiData(`${Game.getApiUrl()}/do-move`, {
             token: token,
             playerToken: playerToken,
             row: row,
@@ -155,7 +154,7 @@ Game.Data = (function () {
      *   The promise.
      */
     function quit (token) {
-        return putApiData(`${config.baseUrl}/${token}/quit`);
+        return putApiData(`${Game.getApiUrl()}/${token}/quit`);
     }
 
     /**
@@ -170,7 +169,7 @@ Game.Data = (function () {
      *   The promise.
      */
     function getByToken (token, url) {
-        return getApiData(`${config.baseUrl}/${token}/${url}`);
+        return getApiData(`${Game.getApiUrl()}/${token}/${url}`);
     }
 
     /**
@@ -206,7 +205,7 @@ Game.Data = (function () {
      * @returns {Promise}
      *   The promise.
      */
-    function putApiData (url, data) {
+    function putApiData (url, data = {}) {
         return $.ajax({
             url: url,
             type: 'PUT',

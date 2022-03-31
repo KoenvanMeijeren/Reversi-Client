@@ -1,8 +1,7 @@
-const apiUrl = 'https://localhost:7042/api/Game';
-
-const Game = (function (url) {
+const Game = (function () {
     const config = {
-        apiUrl: url,
+        apiUrl: '',
+        scoreApiUrl: '',
         refreshRate: 1000,
         // In seconds
         waitingThreshold: 60,
@@ -16,8 +15,16 @@ const Game = (function (url) {
 
     /**
      * Initializes the game object.
+     *
+     * @param {string} url
+     *   The url of the API.
+     * @param {string} scoreApiUrl
+     *   The url of the game score API.
      */
-    const init = function () {
+    const init = function (url, scoreApiUrl) {
+        config.apiUrl = url;
+        config.scoreApiUrl = scoreApiUrl;
+
         const gameContainer = Game.Data.getContainer();
         const gameToken = Game.Data.getToken();
         const playerToken = Game.Data.getPlayerToken();
@@ -275,9 +282,20 @@ const Game = (function (url) {
         return config.apiUrl;
     };
 
+    /**
+     * Gets the score API url.
+     *
+     * @return {string}
+     *   The score API url.
+     */
+    const getScoreApiUrl = function () {
+        return config.scoreApiUrl;
+    };
+
     return {
         init,
         get,
-        getApiUrl
+        getApiUrl,
+        getScoreApiUrl,
     };
-})(apiUrl);
+})();

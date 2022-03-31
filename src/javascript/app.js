@@ -18,9 +18,16 @@ function generateScaleFunction (prevMin, prevMax, newMin, newMax) {
     };
 }
 
+const config = {
+    'apiUrl': {
+        'game': 'https://localhost:7042/api/Game',
+        'score': 'https://localhost:7126/api/GameScore'
+    },
+};
+
 $(document).ready(function () {
     Env.init(Environments.production);
-    Game.init();
+    Game.init(config.apiUrl.game, config.apiUrl.score);
 
     Weather.init('#reversi-weather');
 });
