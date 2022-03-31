@@ -82,19 +82,21 @@ Game.Data = (function () {
 
         return getByToken(token, '')
             .then((data) => {
+                const object = JSON.parse(data);
+
                 return new GameModel(
-                    data.id,
-                    data.description,
-                    data.token,
-                    new PlayerOne(data.playerOne.token),
-                    new PlayerTwo(data.playerTwo.token),
-                    new PlayerModel(data.currentPlayer.token, data.currentPlayer.color),
-                    data.predominantColor,
-                    data.board,
-                    data.possibleMoves,
-                    data.status,
-                    data.conqueredWhiteFiches,
-                    data.conqueredBlackFiches,
+                    object.id,
+                    object.description,
+                    object.token,
+                    new PlayerOne(object.playerOne.token),
+                    new PlayerTwo(object.playerTwo.token),
+                    new PlayerModel(object.currentPlayer.token, object.currentPlayer.color),
+                    object.predominantColor,
+                    object.board,
+                    object.possibleMoves,
+                    object.status,
+                    object.conqueredWhiteFiches,
+                    object.conqueredBlackFiches,
                 );
             })
             .catch((exception) => {
