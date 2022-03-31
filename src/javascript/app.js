@@ -20,7 +20,7 @@ function generateScaleFunction (prevMin, prevMax, newMin, newMax) {
 
 const config = {
     'apiUrl': {
-        'game': 'https://localhost:7042/api/Game',
+        'game': 'https://localhost:7126/api/Game',
         'score': 'https://localhost:7126/api/GameScore'
     },
 };
