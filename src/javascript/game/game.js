@@ -185,7 +185,7 @@ const Game = (function (url) {
         }
 
         if (counterValue > config.waitingThreshold) {
-            // Game.Data.quit(get().Token);
+            Game.Data.quit(get().Token);
         }
     };
 
