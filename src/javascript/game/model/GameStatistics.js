@@ -15,16 +15,36 @@ class GameStatistics {
     #blackFiches;
 
     /**
+     * The amount of conquered white fiches.
+     *
+     * @type {number}
+     */
+    #conqueredWhiteFiches;
+
+    /**
+     * The amount of conquered black fiches.
+     *
+     * @type {number}
+     */
+    #conqueredBlackFiches;
+
+    /**
      * Constructs the game statistics.
      *
      * @param {number} whiteFiches
      *   The white fiches amount.
      * @param {number} blackFiches
      *   The black fiches amount.
+     * @param {number} conqueredWhiteFiches
+     *   The conquered white fiches amount.
+     * @param {number} conqueredBlackFiches
+     *   The conquered black fiches amount.
      */
-    constructor (whiteFiches = 0, blackFiches = 0) {
+    constructor (whiteFiches = 0, blackFiches = 0, conqueredWhiteFiches = 0, conqueredBlackFiches = 0) {
         this.#whiteFiches = whiteFiches;
         this.#blackFiches = blackFiches;
+        this.#conqueredWhiteFiches = conqueredWhiteFiches;
+        this.#conqueredBlackFiches = conqueredBlackFiches;
     }
 
     get WhiteFiches () {
@@ -35,14 +55,12 @@ class GameStatistics {
         return this.#blackFiches;
     }
 
-    get ConqueredFiches () {
-        const conqueredFichesString = localStorage.getItem('conqueredFiches');
-        const conqueredFichesNumeric = Number.parseInt(conqueredFichesString);
-        if (isNaN(conqueredFichesNumeric)) {
-            return 0;
-        }
+    get ConqueredWhiteFiches () {
+        return this.#conqueredWhiteFiches;
+    }
 
-        return conqueredFichesNumeric;
+    get ConqueredBlackFiches () {
+        return this.#conqueredBlackFiches;
     }
 
     /**
@@ -56,6 +74,19 @@ class GameStatistics {
     setFichesAmount (whiteFiches, blackFiches) {
         this.#whiteFiches = whiteFiches;
         this.#blackFiches = blackFiches;
+    }
+
+    /**
+     * Sets the game statistics about the fiches amount.
+     *
+     * @param {number} conqueredWhiteFiches
+     *   The conquered white fiches amount.
+     * @param {number} conqueredBlackFiches
+     *   The conquered black fiches amount.
+     */
+    setConqueredFichesAmount (conqueredWhiteFiches, conqueredBlackFiches) {
+        this.#conqueredWhiteFiches = conqueredWhiteFiches;
+        this.#conqueredBlackFiches = conqueredBlackFiches;
     }
 
     /**

@@ -106,17 +106,31 @@ class GameModel {
      * Constructs the new game object.
      *
      * @param {number} id
+     *   The id.
      * @param {string} description
+     *   The description.
      * @param {string} token
+     *   The token.
      * @param {PlayerModel} playerOne
+     *   The player one.
      * @param {PlayerModel} playerTwo
+     *   The player two.
      * @param {PlayerModel} currentPlayer
+     *   The current player.
      * @param {string} predominantColor
+     *   The predominant color.
      * @param {string} board
+     *   The board.
      * @param {string} possibleMoves
+     *   The possible moves.
      * @param {Status} status
+     *   The status.
+     * @param {number} conqueredWhiteFiches
+     *   The conquered white fiches amount.
+     * @param {number} conqueredBlackFiches
+     *   The conquered black fiches amount.
      */
-    constructor (id, description, token, playerOne, playerTwo, currentPlayer, predominantColor, board, possibleMoves, status) {
+    constructor (id, description, token, playerOne, playerTwo, currentPlayer, predominantColor, board, possibleMoves, status, conqueredWhiteFiches, conqueredBlackFiches) {
         this.#GameStatistics = new GameStatistics();
 
         this.#Id = id;
@@ -129,6 +143,8 @@ class GameModel {
         this.#Board = this.#BoardToArray(board);
         this.#PossibleMoves = GameModel.#PossibleMovesToArray(possibleMoves);
         this.#Status = status;
+
+        this.#GameStatistics.setConqueredFichesAmount(conqueredWhiteFiches, conqueredBlackFiches);
     }
 
     get Id () {

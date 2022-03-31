@@ -100,9 +100,34 @@ Game.Stats = (function () {
      */
     function createConqueredFichesStatistics () {
         const statistics = get();
-        const container = document.getElementById('gameConqueredFichesStatistics');
+        const canvas = document.getElementById('gameConqueredFichesStatistics').getContext('2d');
 
-        container.innerText = statistics.ConqueredFiches.toString();
+        new Chart(canvas, {
+            type: 'bar',
+            data: {
+                labels: ['Zwart', 'Wit',],
+                datasets: [{
+                    label: '# veroverde stenen',
+                    data: [statistics.ConqueredBlackFiches, statistics.ConqueredWhiteFiches],
+                    backgroundColor: [
+                        'rgba(255, 99, 132, 0.2)',
+                        'rgba(54, 162, 235, 0.2)',
+                    ],
+                    borderColor: [
+                        'rgba(255, 99, 132, 1)',
+                        'rgba(54, 162, 235, 1)',
+                    ],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
     }
 
     /**

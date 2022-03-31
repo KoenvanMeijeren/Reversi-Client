@@ -93,7 +93,9 @@ Game.Data = (function () {
                     data.predominantColor,
                     data.board,
                     data.possibleMoves,
-                    data.status
+                    data.status,
+                    data.conqueredWhiteFiches,
+                    data.conqueredBlackFiches,
                 );
             })
             .catch((exception) => {
