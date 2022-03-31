@@ -5,14 +5,27 @@ class GameStatistics {
      *
      * @type {number}
      */
-    #whiteFiches = 0;
+    #whiteFiches;
 
     /**
      * The amount of black fiches.
      *
      * @type {number}
      */
-    #blackFiches = 0;
+    #blackFiches;
+
+    /**
+     * Constructs the game statistics.
+     *
+     * @param {number} whiteFiches
+     *   The white fiches amount.
+     * @param {number} blackFiches
+     *   The black fiches amount.
+     */
+    constructor (whiteFiches = 0, blackFiches = 0) {
+        this.#whiteFiches = whiteFiches;
+        this.#blackFiches = blackFiches;
+    }
 
     get WhiteFiches () {
         return this.#whiteFiches;
