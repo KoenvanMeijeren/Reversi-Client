@@ -66,6 +66,8 @@ const Game = (function (url) {
                 }
 
                 renderQuitGameTimerProgressBar(game, gameContainer);
+
+                Game.Stats.init('#reversi-statistics', game.GameStatistics);
             }, config.refreshRate);
 
             // Creates the event and listens to it for refreshing the game.
@@ -118,7 +120,6 @@ const Game = (function (url) {
             new GameBoardWidget(Game.Data.getGamePlayContainer(), game, playerToken).render();
 
             Game.Reversi.initClickableFiches();
-            Game.Stats.init('#reversi-statistics', game.GameStatistics);
         });
     };
 
@@ -184,7 +185,7 @@ const Game = (function (url) {
         }
 
         if (counterValue > config.waitingThreshold) {
-            Game.Data.quit(get().Token);
+            // Game.Data.quit(get().Token);
         }
     };
 
