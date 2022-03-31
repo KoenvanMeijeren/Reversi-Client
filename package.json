@@ -1,63 +1,63 @@
 {
-  "name": "reversi-client",
-  "version": "1.0.0",
-  "description": "Provides the client for the Reversi Game",
-  "main": "dist/app.min.js",
-  "directories": {
-    "src": "src",
-    "test": "tests"
-  },
-  "scripts": {
-      "build": "gulp clean && gulp copyHandlebars && gulp templates && gulp js && gulp css && gulp html && gulp icons",
-      "js": "gulp copyHandlebars && gulp templates && gulp js",
-      "code-standards": "npx eslint"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/KoenvanMeijeren/Reversi-Client.git"
-  },
-  "keywords": [
-    "Reversi"
-  ],
-  "author": "Koen van Meijeren",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/KoenvanMeijeren/Reversi-Client/issues"
-  },
-  "browserslist": [
-    "cover 99.5%"
-  ],
-  "homepage": "https://github.com/KoenvanMeijeren/Reversi-Client#readme",
-  "devDependencies": {
-      "@babel/core": "^7.17.5",
-      "@babel/preset-env": "^7.16.11",
-      "autoprefixer": "^10.4.2",
-      "browser-sync": "^2.27.7",
-      "cssnano": "^5.1.1",
-      "del": "^6.0.0",
-      "eslint": "^8.10.0",
-      "gulp": "^4.0.2",
-      "gulp-babel": "^8.0.0",
-      "gulp-concat": "^2.6.1",
-      "gulp-declare": "^0.3.0",
-      "gulp-handlebars": "^5.0.2",
-      "gulp-header": "^2.0.9",
-      "gulp-htmlmin": "^5.0.1",
-      "gulp-optimize-js": "^1.1.0",
-      "gulp-order": "^1.2.0",
-      "gulp-postcss": "^9.0.1",
-      "gulp-rename": "^2.0.0",
-      "gulp-sass": "^5.1.0",
-      "gulp-strip-comments": "^2.5.2",
-      "gulp-strip-css-comments": "^2.0.0",
-      "gulp-terser": "^2.1.0",
-      "gulp-wrap": "^0.15.0",
-      "jquery": "^3.6.0",
-      "sass": "^1.49.9",
-      "snazzy": "^9.0.0"
-  },
-  "dependencies": {
-      "bootstrap": "^5.1.3",
-      "jquery": "^3.6.0"
-  }
+    "name": "reversi-client",
+    "version": "1.0.0",
+    "description": "Provides the client for the Reversi Game",
+    "main": "dist/app.min.js",
+    "directories": {
+        "src": "src",
+        "test": "tests"
+    },
+    "scripts": {
+        "build": "gulp clean && gulp copyHandlebars && gulp templates && gulp js && gulp css && gulp html && gulp icons",
+        "js": "gulp copyHandlebars && gulp templates && gulp js",
+        "code-standards": "npx eslint"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/KoenvanMeijeren/Reversi-Client.git"
+    },
+    "keywords": [
+        "Reversi"
+    ],
+    "author": "Koen van Meijeren",
+    "license": "ISC",
+    "bugs": {
+        "url": "https://github.com/KoenvanMeijeren/Reversi-Client/issues"
+    },
+    "browserslist": [
+        "cover 99.5%"
+    ],
+    "homepage": "https://github.com/KoenvanMeijeren/Reversi-Client#readme",
+    "devDependencies": {
+        "@babel/core": "^7.17.5",
+        "@babel/preset-env": "^7.16.11",
+        "autoprefixer": "^10.4.2",
+        "browser-sync": "^2.27.7",
+        "cssnano": "^5.1.1",
+        "del": "^6.0.0",
+        "eslint": "^8.10.0",
+        "gulp": "^4.0.2",
+        "gulp-babel": "^8.0.0",
+        "gulp-concat": "^2.6.1",
+        "gulp-declare": "^0.3.0",
+        "gulp-handlebars": "^5.0.2",
+        "gulp-header": "^2.0.9",
+        "gulp-htmlmin": "^5.0.1",
+        "gulp-optimize-js": "^1.1.0",
+        "gulp-order": "^1.2.0",
+        "gulp-postcss": "^9.0.1",
+        "gulp-rename": "^2.0.0",
+        "gulp-sass": "^5.1.0",
+        "gulp-strip-comments": "^2.5.2",
+        "gulp-strip-css-comments": "^2.0.0",
+        "gulp-terser": "^2.1.0",
+        "gulp-wrap": "^0.15.0",
+        "jquery": "^3.6.0",
+        "sass": "^1.49.9",
+        "snazzy": "^9.0.0"
+    },
+    "dependencies": {
+        "bootstrap": "^5.1.3",
+        "jquery": "^3.6.0"
+    }
 }
