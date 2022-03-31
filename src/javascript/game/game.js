@@ -118,6 +118,7 @@ const Game = (function (url) {
             new GameBoardWidget(Game.Data.getGamePlayContainer(), game, playerToken).render();
 
             Game.Reversi.initClickableFiches();
+            Game.Stats.init('#reversi-statistics', game.GameStatistics);
         });
     };
 
