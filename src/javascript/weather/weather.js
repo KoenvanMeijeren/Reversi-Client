@@ -1,7 +1,7 @@
 const Weather = (function () {
 
     const configMap = {
-        url: 'http://api.openweathermap.org/data/2.5/',
+        url: 'https://api.openweathermap.org/data/2.5/',
         apiKey: 'aa6bb372c0ccba60aff08f3c0b3cf922'
     };
 
