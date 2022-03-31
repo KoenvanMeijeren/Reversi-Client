@@ -1,7 +1,7 @@
 const Weather = (function () {
 
     const configMap = {
-        url: 'http://api.openweathermap.org/data/2.5/',
+        url: 'https://api.openweathermap.org/data/2.5/',
         apiKey: 'aa6bb372c0ccba60aff08f3c0b3cf922'
     };
 
@@ -15,8 +15,6 @@ const Weather = (function () {
         const parent = $(parentSelector);
 
         get('amsterdam').then(function (data) {
-            console.log(data);
-
             parent.html(Reversi.templates.weather({
                 city: 'amsterdam',
                 general: data.weather[0].description,

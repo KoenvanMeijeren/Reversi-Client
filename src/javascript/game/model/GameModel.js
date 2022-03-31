@@ -96,20 +96,43 @@ class GameModel {
     #Status;
 
     /**
+     * The game statistics.
+     *
+     * @type {GameStatistics}
+     */
+    #GameStatistics;
+
+    /**
      * Constructs the new game object.
      *
      * @param {number} id
+     *   The id.
      * @param {string} description
+     *   The description.
      * @param {string} token
+     *   The token.
      * @param {PlayerModel} playerOne
+     *   The player one.
      * @param {PlayerModel} playerTwo
+     *   The player two.
      * @param {PlayerModel} currentPlayer
+     *   The current player.
      * @param {string} predominantColor
+     *   The predominant color.
      * @param {string} board
+     *   The board.
      * @param {string} possibleMoves
+     *   The possible moves.
      * @param {Status} status
+     *   The status.
+     * @param {number} conqueredWhiteFiches
+     *   The conquered white fiches amount.
+     * @param {number} conqueredBlackFiches
+     *   The conquered black fiches amount.
      */
-    constructor (id, description, token, playerOne, playerTwo, currentPlayer, predominantColor, board, possibleMoves, status) {
+    constructor (id, description, token, playerOne, playerTwo, currentPlayer, predominantColor, board, possibleMoves, status, conqueredWhiteFiches, conqueredBlackFiches) {
+        this.#GameStatistics = new GameStatistics();
+
         this.#Id = id;
         this.#Description = description;
         this.#Token = token;
@@ -117,9 +140,11 @@ class GameModel {
         this.#PlayerTwo = playerTwo;
         this.#CurrentPlayer = currentPlayer;
         this.#PredominantColor = GameModel.#stringToColor(predominantColor);
-        this.#Board = GameModel.#BoardToArray(board);
+        this.#Board = this.#BoardToArray(board);
         this.#PossibleMoves = GameModel.#PossibleMovesToArray(possibleMoves);
         this.#Status = status;
+
+        this.#GameStatistics.setConqueredFichesAmount(conqueredWhiteFiches, conqueredBlackFiches);
     }
 
     get Id () {
@@ -160,6 +185,10 @@ class GameModel {
 
     get Status () {
         return this.#Status;
+    }
+
+    get GameStatistics () {
+        return this.#GameStatistics;
     }
 
     /**
@@ -221,7 +250,7 @@ class GameModel {
      * @return {Array<Array<Color>>}
      *   The board as object.
      */
-    static #BoardToArray (board) {
+    #BoardToArray (board) {
         const input = board
             .replace('[[', '')
             .replace(']]', '')
@@ -232,6 +261,11 @@ class GameModel {
             convertedInput[index] = values.split(',');
         });
 
+        const fichesAmount = {
+            white: 0,
+            black: 0
+        };
+
         let result = [];
         convertedInput.forEach(function (row, rowIndex) {
             row.forEach(function (column, columnIndex) {
@@ -241,9 +275,11 @@ class GameModel {
                     break;
                 case '1':
                     row[columnIndex] = Color.White;
+                    fichesAmount.white++;
                     break;
                 case '2':
                     row[columnIndex] = Color.Black;
+                    fichesAmount.black++;
                     break;
                 default:
                     if (column.includes('0')) {
@@ -253,11 +289,13 @@ class GameModel {
 
                     if (column.includes('1')) {
                         row[columnIndex] = Color.White;
+                        fichesAmount.white++;
                         break;
                     }
 
                     if (column.includes('2')) {
                         row[columnIndex] = Color.Black;
+                        fichesAmount.black++;
                         break;
                     }
 
@@ -267,6 +305,8 @@ class GameModel {
 
             result[rowIndex] = row;
         });
+
+        this.#GameStatistics.setFichesAmount(fichesAmount.white, fichesAmount.black);
 
         return result;
     }

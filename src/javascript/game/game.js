@@ -16,13 +16,8 @@ const Game = (function (url) {
 
     /**
      * Initializes the game object.
-     *
-     * @param {function} callback
-     *   The callable function. This function is called before initializing the game.
      */
-    const init = function (callback) {
-        callback();
-
+    const init = function () {
         const gameContainer = Game.Data.getContainer();
         const gameToken = Game.Data.getToken();
         const playerToken = Game.Data.getPlayerToken();
@@ -71,6 +66,8 @@ const Game = (function (url) {
                 }
 
                 renderQuitGameTimerProgressBar(game, gameContainer);
+
+                Game.Stats.init('#reversi-statistics', game.GameStatistics);
             }, config.refreshRate);
 
             // Creates the event and listens to it for refreshing the game.

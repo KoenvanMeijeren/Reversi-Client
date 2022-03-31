@@ -26,13 +26,6 @@ Game.Data = (function () {
     };
 
     /**
-     * Initializes the game data.
-     */
-    function init () {
-
-    }
-
-    /**
      * Gets the container of the game.
      *
      * @return {jQuery}
@@ -100,7 +93,9 @@ Game.Data = (function () {
                     data.predominantColor,
                     data.board,
                     data.possibleMoves,
-                    data.status
+                    data.status,
+                    data.conqueredWhiteFiches,
+                    data.conqueredBlackFiches,
                 );
             })
             .catch((exception) => {
@@ -248,7 +243,6 @@ Game.Data = (function () {
     }
 
     return {
-        init,
         getContainer,
         getGamePlayContainer,
         getToken,
