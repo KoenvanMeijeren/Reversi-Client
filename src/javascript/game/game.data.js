@@ -82,7 +82,12 @@ Game.Data = (function () {
 
         return getByToken(token, '')
             .then((data) => {
-                const object = JSON.parse(data);
+                let object;
+                try {
+                    object = JSON.parse(data);
+                } catch (e) {
+                    object = data;
+                }
 
                 return new GameModel(
                     object.id,
